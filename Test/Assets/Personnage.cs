@@ -19,7 +19,7 @@ public class Personnage : Entity
 
 
     private Animation AnimationStill = new Animation("joueurStill", 0.05f, 1);
-    private Animation AnimationFast = new Animation("joueurFast", 0.05f, 1);
+    private Animation AnimationFast = new Animation("joueurFast", 0.05f, 5);
     private Animation AnimationTransit = new Animation("joueurTransit", 0.05f, 1);
 
 
@@ -99,6 +99,7 @@ public class Personnage : Entity
             im.sprite = AnimationStill.image;
             timeFaste1 = 0;
             timeFaste2 = 0;
+            im.rectTransform.rect.width = 71.5f;
         }
         else if (Mathf.Abs(deplacementCible.x) > 11)
         {
@@ -110,7 +111,7 @@ public class Personnage : Entity
                 im.sprite = anim.image;
                 AnimationTransit.timer = 0;
             }
-            else if (timeFaste2 < 1)
+            else if (timeFaste2 < 0.1)
             {
                 timeFaste2 += dt;
                 AnimationTransit.update(dt);
@@ -120,6 +121,7 @@ public class Personnage : Entity
             else
             {
                 //AnimationTransit.timer = 0;
+                im.rectTransform = 200;
                 AnimationFast.update(dt);
                 im.sprite = AnimationFast.image;
             }
@@ -127,7 +129,7 @@ public class Personnage : Entity
         else
         {
             //AnimationStill.hasUpdate = false;
-
+            im.rectTransform.rect.width = 71.5f;
             anim.update(dt * facteurVitesse / 5);
             im.sprite = anim.image;
             timeFaste1 = 0;
@@ -164,7 +166,7 @@ public class Personnage : Entity
         deplacementCible += vitesse;
         deplacementCible = new Vector3(deplacementCible.x * 0.6f, deplacementCible.y, deplacementCible.z);
 
-        if (deplacementCible.x < 1e-3)
+        if (Mathf.Abs(deplacementCible.x) < 1e-3)
         {
             deplacementCible.x = 0;
         }
