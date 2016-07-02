@@ -78,6 +78,57 @@ public class Personnage : Entity
             timerActive = false;
             timerCollision = 0;
         }
+
+
+        //Debug.Log(deplacementCible.x);
+        float animMult = Mathf.Sign(deplacementCible.x);
+       
+
+        GameObject.Find("Debug2").GetComponent<Text>().text = deplacementCible.x+"";
+        if (Mathf.Abs(deplacementCible.x) < 0.5f) {
+            AnimationStill.update(dt);
+            im.sprite = AnimationStill.image;
+            timeFaste1 = 0;
+            timeFaste2 = 0;
+        }
+        else if (Mathf.Abs(deplacementCible.x) > 11) {
+
+            if (timeFaste1 < 1)
+            {
+                timeFaste1 += dt;
+                anim.update(dt * facteurVitesse / 5);
+                im.sprite = anim.image;
+                AnimationTransit.timer = 0;
+            }
+            else if (timeFaste2 < 1) {
+                timeFaste2 += dt;
+                AnimationTransit.update(dt);
+
+                im.sprite = AnimationTransit.image;
+            }
+            else
+            {
+                //AnimationTransit.timer = 0;
+                AnimationFast.update(dt);
+                im.sprite = AnimationFast.image;
+            }
+        }
+        else {
+            //AnimationStill.hasUpdate = false;
+            
+            anim.update(dt*facteurVitesse/5);
+            im.sprite = anim.image;
+            timeFaste1 = 0;
+            timeFaste2 = 0;
+        }
+        /*if (deplacementCible.x < 0) {
+            im.transform.localScale = new Vector3 (-1,1,1);
+        }
+        if (deplacementCible.x > 0)
+        {
+            im.transform.localScale = new Vector3(1, 1, 1);
+        }*/
+
     }
 
 
@@ -87,20 +138,28 @@ public class Personnage : Entity
         deplacementCible = new Vector3(deplacementCible.x, 0, deplacementCible.z);
         if (toucheEnfoncerD)
         {
+
             deplacementCible = new Vector3(facteurVitesse, 0, 0);
+
+            deplacementCible = new Vector3(facteurVitesse*30*dt, 0, 0);
+
             if(vitesse.x<10)
             vitesse = new Vector3(vitesse.x+1, vitesse.y, vitesse.z);
         }
         if (toucheEnfoncerA)
         {
-            deplacementCible = new Vector3(-facteurVitesse, 0, 0);
+            deplacementCible = new Vector3(-facteurVitesse * 30 * dt, 0, 0);
             if (vitesse.x >- 10)
                 vitesse = new Vector3(vitesse.x - 1, vitesse.y, vitesse.z);
         }
-        vitesse -= new Vector3(0, 1, 0);
+        vitesse -= new Vector3(0, 1*30*dt, 0);
         vitesse = new Vector3(vitesse.x*0.6f, vitesse.y, vitesse.z);
         deplacementCible += vitesse;
         deplacementCible = new Vector3(deplacementCible.x * 0.6f, deplacementCible.y, deplacementCible.z);
+
+        if (deplacementCible.x < 1e-3) {
+            deplacementCible.x = 0;
+        }
 
         aDejaSaute = false;
     }
