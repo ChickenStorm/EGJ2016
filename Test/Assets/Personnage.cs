@@ -127,9 +127,13 @@ public class Personnage : Entity
             timeFaste1 = 0;
             timeFaste2 = 0;
         }
-        if (deplacementCible.x < 0) {
-            //im.transform.set.lossyScale = new Vector3 (-1,0,0);
+        /*if (deplacementCible.x < 0) {
+            im.transform.localScale = new Vector3 (-1,1,1);
         }
+        if (deplacementCible.x > 0)
+        {
+            im.transform.localScale = new Vector3(1, 1, 1);
+        }*/
     }
 
 
