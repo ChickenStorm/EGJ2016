@@ -13,16 +13,6 @@ public class Personnage : Entity
     bool aDejaSaute;
     bool timerActive;
 
-
-    float timeFaste1;
-    float timeFaste2;
-
-
-    private Animation AnimationStill = new Animation("joueurStill",0.05f,1);
-    private Animation AnimationFast = new Animation("joueurFast", 0.05f, 1);
-    private Animation AnimationTransit = new Animation("joueurTransit", 0.05f, 1);
-
-
     Vector3 deplacementCible;
 
     public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri, Image im, Animation anim) : base(pos, dim, vit, false, spri, im, anim)
@@ -45,7 +35,8 @@ public class Personnage : Entity
 
     public override void update(float dt, World w)
     {
-
+        anim.update(dt);
+        im.sprite = anim.image;
         //base.update(dt,w);
         if (position.y < -1000)
         {
@@ -71,7 +62,7 @@ public class Personnage : Entity
                 saut(p);
         }
 
-        deplacer(dt);
+        deplacer();
         foreach (Plateform p in w.platforms)
             collision(p);
         validerDeplacement();
@@ -81,67 +72,21 @@ public class Personnage : Entity
         {
             timerCollision += dt;
         }
-        //Debug.Log(timerCollision);
+        Debug.Log(timerCollision);
         if (timerCollision > 2)
         {
             timerActive = false;
             timerCollision = 0;
         }
-
-        //Debug.Log(deplacementCible.x);
-        float animMult = Mathf.Sign(deplacementCible.x);
-       
-
-        GameObject.Find("Debug2").GetComponent<Text>().text = deplacementCible.x+"";
-        if (Mathf.Abs(deplacementCible.x) < 0.01f) {
-            AnimationStill.update(dt);
-            im.sprite = AnimationStill.image;
-            timeFaste1 = 0;
-            timeFaste2 = 0;
-        }
-        else if (Mathf.Abs(deplacementCible.x) > 11) {
-
-            if (timeFaste1 < 1)
-            {
-                timeFaste1 += dt;
-                anim.update(dt * facteurVitesse / 5);
-                im.sprite = anim.image;
-                AnimationTransit.timer = 0;
-            }
-            else if (timeFaste2 < 1) {
-                timeFaste2 += dt;
-                AnimationTransit.update(dt);
-
-                im.sprite = AnimationTransit.image;
-            }
-            else
-            {
-                //AnimationTransit.timer = 0;
-                AnimationFast.update(dt);
-                im.sprite = AnimationFast.image;
-            }
-        }
-        else {
-            //AnimationStill.hasUpdate = false;
-            
-            anim.update(dt*facteurVitesse/5);
-            im.sprite = anim.image;
-            timeFaste1 = 0;
-            timeFaste2 = 0;
-        }
-        if (deplacementCible.x < 0) {
-            //im.transform.set.lossyScale = new Vector3 (-1,0,0);
-        }
     }
 
 
 
-    public void deplacer(float dt)
+    public void deplacer()
     {
         deplacementCible = new Vector3(deplacementCible.x, 0, deplacementCible.z);
         if (toucheEnfoncerD)
         {
-<<<<<<< HEAD
             deplacementCible = new Vector3(facteurVitesse, 0, 0);
             if(vitesse.x<10)
             vitesse = new Vector3(vitesse.x+1, vitesse.y, vitesse.z);
@@ -154,15 +99,6 @@ public class Personnage : Entity
         }
         vitesse -= new Vector3(0, 1, 0);
         vitesse = new Vector3(vitesse.x*0.6f, vitesse.y, vitesse.z);
-=======
-            deplacementCible = new Vector3(facteurVitesse, 0, 0) *30*dt;
-        }
-        if (toucheEnfoncerA)
-        {
-            deplacementCible = new Vector3(-facteurVitesse, 0, 0)*dt*30;
-        }
-        vitesse -= new Vector3(0, 1, 0)*30*dt;
->>>>>>> origin/master
         deplacementCible += vitesse;
         deplacementCible = new Vector3(deplacementCible.x * 0.6f, deplacementCible.y, deplacementCible.z);
 
@@ -176,6 +112,12 @@ public class Personnage : Entity
             vitesse += new Vector3(0, 25, 0);
             aDejaSaute = true;
         }
+
+        /*im.rectTransform.anchoredPosition = new Vector2(0.5f, 0.5f);
+
+        im.rectTransform.localScale = new Vector3(im.rectTransform.localScale.x*(-1), 1,1);
+        im.rectTransform.anchoredPosition = new Vector2(0f, 0f);
+        */
     }
 
     public void validerDeplacement()
