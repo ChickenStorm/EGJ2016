@@ -1,3 +1,12 @@
 Test/Library/
 Test/Temp/
 Test/.vs/Test/v14/.suo
+Test/Assets/Resources/*/*.png.meta
+Test/Assets/Resources/AnimVirus/Thumbs.db.meta
+Test/Assets/Resources/AnimVirus/Thumbs.db
+Test/Assets/Resources/Bille/Thumbs.db.meta
+Test/Assets/Resources/Bille/Thumbs.db
+Test/Assets/Resources/joueurAnim.meta
+Test/Assets/Resources/Bille.meta
+Test/Assets/Animation.cs.meta
+Test/Assets/Resources/AnimVirus.meta

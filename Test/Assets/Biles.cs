@@ -10,7 +10,7 @@ public class Biles : Entity
 
     public float value { get; set; }
 
-    public Biles(Vector3 pos, Vector3 vitesse, Vector3 dimension, Sprite s, Image image, float valueP) : base(pos, dimension, vitesse, true, s, image)
+    public Biles(Vector3 pos, Vector3 vitesse, Vector3 dimension, Sprite s, Image image, float valueP, Animation anim) : base(pos, dimension, vitesse, true, s, image, anim)
     {
 
         value = valueP;

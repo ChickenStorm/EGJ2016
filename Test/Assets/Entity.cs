@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class Entity {
+    protected Animation anim;
     public Vector3 position { get; set; }
     public Vector3 dimension { get; set; }
     public Vector3 vitesse { get; set; }
@@ -11,7 +12,7 @@ public class Entity {
     public Image im { get; set; }
     public bool isActive { get; set; }
 
-    public Entity(Vector3 pos, Vector3 dim, Vector3 vit, bool isstat, Sprite s,Image impara,bool isActiveP = true)
+    public Entity(Vector3 pos, Vector3 dim, Vector3 vit, bool isstat, Sprite s,Image impara, Animation animP , bool isActiveP = true)
     {
         vitesse = vit;
         position = pos;
@@ -20,7 +21,8 @@ public class Entity {
         dimension = dim;
         im = impara;
         isActive = isActiveP;
-
+        anim = animP;
+    
 
     }
     public Entity()
@@ -34,7 +36,8 @@ public class Entity {
 
 
     virtual public void update(float dt, World w) {
-        
+        anim.update(dt);
+        im.sprite = anim.image;
         im.rectTransform.position = position; //- new Vector3(+40,-40,0) ;
         if (!isStatique)
         {

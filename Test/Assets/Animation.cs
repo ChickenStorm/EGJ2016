@@ -7,6 +7,7 @@ public class Animation
     float timer;
     float deltatemps;
     int nombre;
+    bool hasUpdate = false;
     public Sprite image { get; private set; }
 
     public Animation(string nomm,  float deltatmp, int nbr)
@@ -19,8 +20,12 @@ public class Animation
 
     public void update(float dt)
     {
-        timer += dt;
-        image = Resources.Load<Sprite>(nom + "_" +  (int) (timer / deltatemps) % nombre);
-        Debug.Log((int)(timer / deltatemps) % nombre);
+        
+        if (! hasUpdate || nombre != 1) {
+            hasUpdate = true;
+            timer += dt;
+            image = Resources.Load<Sprite>(nom + "/" + (int)(timer / deltatemps) % nombre);
+            Debug.Log((int)(timer / deltatemps) % nombre);
+        }
     }
 }

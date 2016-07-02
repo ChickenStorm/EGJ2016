@@ -13,7 +13,7 @@ public class Personnage : Entity
 
     Vector3 deplacementCible;
 
-    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri,Image im) : base(pos, dim, vit, false, spri,im)
+    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri,Image im, Animation anim) : base(pos, dim, vit, false, spri,im, anim)
     {
         toucheEnfoncerD = false;
         toucheEnfoncerA = false;
@@ -24,14 +24,16 @@ public class Personnage : Entity
         aDejaSaute = false;
     }
 
-    public Personnage(Image im) : this(new Vector3(), new Vector3(), new Vector3(), new Sprite(),im)
+    /*public Personnage(Image im) : this(new Vector3(), new Vector3(), new Vector3(), new Sprite(),im)
     {
 
-    }
+    }*/
 
 
     public override void update(float dt, World w)
     {
+        anim.update(dt);
+        im.sprite = anim.image;
         //base.update(dt,w);
         if (position.y < -1000) {
             position = new Vector3(0, 500, 0);

@@ -11,20 +11,23 @@ public class Virus : Entity
     private float dropTime;
     private Image bille;
     private float internalTime;
-
-    public Virus(Vector3 pos, Vector3 vitesse, Vector3 dimension, Sprite s,Image image,float dropTimeP, Image billeP) : base(pos, dimension, vitesse, false, s,image) {
+    private Animation billeAnim;
+    public Virus(Vector3 pos, Vector3 vitesse, Vector3 dimension, Sprite s,Image image,float dropTimeP, Image billeP, Animation anim, Animation animB) : base(pos, dimension, vitesse, false, s,image,anim) {
         dropTime = dropTimeP;
         bille = billeP;
+        billeAnim = animB;
     }
 
     private void dropBille(World w) {
         Image b = Object.Instantiate(w.billeModel);
         b.transform.SetParent(w.billeP.transform);
-        w.billes.Add(new Biles(position, new Vector3(0, 0, 0), new Vector3(10, 10, 0), Resources.Load<Sprite>("DSC02576"), b, 3));
+        w.billes.Add(new Biles(position, new Vector3(0, 0, 0), new Vector3(10, 10, 0), Resources.Load<Sprite>("DSC02576"), b, 3, billeAnim));
     }
 
 
     public override void update(float dt, World w) {
+        anim.update(dt);
+        im.sprite = anim.image;
 
         internalTime += dt;
         //Debug.Log(internalTime);
@@ -42,7 +45,7 @@ public class Virus : Entity
 
         // TODO mettre les dims 
 
-        if (Mathf.Abs(w.getPlayer().position.x - this.position.x) < 100  && Mathf.Abs(w.getPlayer().position.y - this.position.y) < 100) {
+        if (Mathf.Abs(w.getPlayer().position.x - this.position.x) < base.dimension.x + w.getPlayer().dimension.x && Mathf.Abs(w.getPlayer().position.y - this.position.y) < base.dimension.y + w.getPlayer().dimension.y) {
             w.hasWin = true;
             Debug.Log("win");
         }
