@@ -33,7 +33,7 @@ public class Personnage : Entity
         //base.update(dt,w);
 
         if (this.position.y < -1000) {
-            position = Vec
+            //position = Vector
         }
 
         //deplacer joueur

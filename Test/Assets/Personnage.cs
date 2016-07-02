@@ -96,28 +96,35 @@ public class Personnage : Entity
         position += deplacementCible;
     }
 
-    public bool collision(Plateform platef)
+    public void collision(Plateform platef)
     {
-        Vector3 nPosition = position + deplacementCible;
-        //Debug.Log(nPosition.y + ", " + dimension.x + " : " + platef.position.x + " , " + platef.dimension.x);
-        if ((nPosition.x + dimension.x > platef.position.x && nPosition.x + dimension.x < platef.position.x + platef.dimension.x) || (nPosition.x < platef.position.x + platef.dimension.x && nPosition.x > platef.position.x))
+        if (platef != null)
         {
-            //Debug.Log(nPosition);
-            if (position.y < platef.position.y + platef.dimension.y && position.y + dimension.y > platef.position.y)
+            Vector3 nPosition = position + deplacementCible;
+            //Debug.Log(nPosition.y + ", " + dimension.x + " : " + platef.position.x + " , " + platef.dimension.x);
+            if ((nPosition.x + dimension.x > platef.position.x && nPosition.x + dimension.x < platef.position.x + platef.dimension.x) || (nPosition.x < platef.position.x + platef.dimension.x && nPosition.x > platef.position.x))
             {
-               // Debug.Log("ok");
-                deplacementCible.x = 0;
-                vitesse = new Vector3(0, vitesse.y, vitesse.z);
+                //Debug.Log(nPosition);
+                if (position.y < platef.position.y + platef.dimension.y && position.y + dimension.y > platef.position.y)
+                {
+                    // Debug.Log("ok");
+                    deplacementCible.x = 0;
+                    vitesse = new Vector3(0, vitesse.y, vitesse.z);
+                }
             }
-        }
-        if ((nPosition.y + dimension.y > platef.position.y && nPosition.y + dimension.y < platef.position.y + platef.dimension.y) || (nPosition.y < platef.position.y + platef.dimension.y && nPosition.y > platef.position.y))
-        {
-            if (position.x < platef.position.x + platef.dimension.x && position.x + dimension.x > platef.position.x)
+            if ((nPosition.y + dimension.y > platef.position.y && nPosition.y + dimension.y < platef.position.y + platef.dimension.y) || (nPosition.y < platef.position.y + platef.dimension.y && nPosition.y > platef.position.y))
             {
-                deplacementCible.y = 0;
-                vitesse = new Vector3(vitesse.x, 0, vitesse.z);
+                if (position.x < platef.position.x + platef.dimension.x && position.x + dimension.x > platef.position.x)
+                {
+                    deplacementCible.y = 0;
+                    vitesse = new Vector3(vitesse.x, 0, vitesse.z);
+                }
             }
+            //return false;
         }
-        return false;
+        else {
+        }
     }
+    
+   
 }

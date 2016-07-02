@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+
 
 public class main : MonoBehaviour {
 
@@ -15,14 +17,56 @@ public class main : MonoBehaviour {
     public Text youWinText;
     public World w;
     private List<Plateform> ptemp = new List<Plateform>();
+    private bool mainGameIsRunning = false;
+    public Image mainScene;
+    public Image mainMenu;
+    private bool isInMenu = true;
 
     // Use this for initialization
-    void Start () {
+
+    void Start() {
+        //mainScene.gameObject.active = true;
+        
+        mainGameIsRunning = false;
+        isInMenu = true;
+
+        
+        //w = new World(null, null, null);
+
+
+
+        /************************************************/
+
+        liste_plateformes = listePlateformes.transform.GetComponentsInChildren<PlateformeScript>();
+
         joueur = new Personnage(new Vector3(0, 500, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
         virusOb = new Virus(new Vector3(200, 200, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus);
 
 
-        liste_plateformes = listePlateformes.transform.GetComponentsInChildren<PlateformeScript>();
+
+        for (int i = 0; i < liste_plateformes.Length; ++i)
+        {
+            ptemp.Add(liste_plateformes[i].plateform);
+        }
+
+        w = new World(joueur, ptemp, virusOb);
+        /************************************************/
+
+        //mainScene.gameObject.SetActive(false);
+        //mainMenu.gameObject.SetActive(true);
+        CreatGameSceneDefault();
+
+    }
+
+    void CreatGameSceneDefault () {
+        
+        isInMenu = false;
+        mainScene.gameObject.SetActive(true);
+        mainMenu.gameObject.SetActive(false);
+        /*joueur = new Personnage(new Vector3(0, 500, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
+        virusOb = new Virus(new Vector3(200, 200, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus);
+
+
 
         
 
@@ -33,17 +77,22 @@ public class main : MonoBehaviour {
 
 
 
-        w = new World(joueur, ptemp, virusOb);
-
+        w = new World(joueur, ptemp, virusOb);*/
+        mainGameIsRunning = true;
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-        w.update(Time.deltaTime);
+    // Update is called once per frame
+    void Update() {
 
-        if (w.hasWin) {
-            youWinText.rectTransform.position = new Vector3 (200,200,0);
+        if (mainGameIsRunning)
+        {
+            w.update(Time.deltaTime);
+
+            if (w.hasWin)
+            {
+                SceneManager.LoadScene("win");
+                //youWinText.rectTransform.position = new Vector3(200, 200, 0);
+            }
         }
         /*
 
