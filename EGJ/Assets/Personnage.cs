@@ -30,7 +30,7 @@ public class Personnage : Entity
         toucheEnfoncerD = false;
         toucheEnfoncerA = false;
         toucheEnfoncerSpace = false;
-        vitesseMin = 10;
+        vitesseMin = 20;
         facteurVitesse = vitesseMin;
         timerCollision = 0;
         timerActive = false;
@@ -98,9 +98,9 @@ public class Personnage : Entity
             im.sprite = AnimationStill.image;
             timeFaste1 = 0;
             timeFaste2 = 0;
-            im.se
+            //im.r
         }
-        else if (Mathf.Abs(deplacementCible.x) > 11)
+        else if (Mathf.Abs(deplacementCible.x) > 20)
         {
 
             if (timeFaste1 < 1)
@@ -120,7 +120,7 @@ public class Personnage : Entity
             else
             {
                 //AnimationTransit.timer = 0;
-                im.rectTransform = 200;
+                //im.rectTransform = 200;
                 AnimationFast.update(dt);
                 im.sprite = AnimationFast.image;
             }
@@ -128,7 +128,7 @@ public class Personnage : Entity
         else
         {
             //AnimationStill.hasUpdate = false;
-            im.rectTransform.rect.width = 71.5f;
+            //im.rectTransform.rect.width = 71.5f;
             anim.update(dt * facteurVitesse / 5);
             im.sprite = anim.image;
             timeFaste1 = 0;
@@ -214,7 +214,7 @@ public class Personnage : Entity
 
                         if (!timerActive)
                         {
-                            facteurVitesse -= 3;
+                            facteurVitesse -= 30;
                             timerActive = true;
                         }
                         if (facteurVitesse <= vitesseMin)

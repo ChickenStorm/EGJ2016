@@ -74,8 +74,8 @@ public class main : MonoBehaviour {
         ground = groundI.transform.GetComponentsInChildren<PlateformeScript>();
 
 
-        joueur = new Personnage(new Vector3(0, 300, 0), new Vector3(imageJoueur.rectTransform.rect.width, imageJoueur.rectTransform.rect.height, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur, joueurAnim);
-        virusOb = new Virus(new Vector3(200, 1000, 0), new Vector3(2, 0, 0), new Vector3(virus.rectTransform.rect.width, virus.rectTransform.rect.height, 0), Resources.Load<Sprite>("DSC02576"), virus,2, bille, AnimVirus,billeAnim);
+        joueur = new Personnage(new Vector3(imageJoueur.transform.position.x, imageJoueur.transform.position.y, 0), new Vector3(imageJoueur.rectTransform.rect.width, imageJoueur.rectTransform.rect.height, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur, joueurAnim);
+        virusOb = new Virus(new Vector3(200, 1000, 0), new Vector3(15, 0, 0), new Vector3(virus.rectTransform.rect.width, virus.rectTransform.rect.height, 0), Resources.Load<Sprite>("DSC02576"), virus,2, bille, AnimVirus,billeAnim);
     
         Image b = Instantiate(bille);
         b.transform.SetParent(billeParent.transform);
@@ -104,7 +104,7 @@ public class main : MonoBehaviour {
 
         for (int i = 0; i < ground.Length; ++i)
         {
-            liste_plateformes[i].plateform.anim = platAnimGr;
+            ground[i].plateform.anim = platAnimGr;
             ptemp.Add(ground[i].plateform);
         }
 
