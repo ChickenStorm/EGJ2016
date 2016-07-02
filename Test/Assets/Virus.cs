@@ -15,6 +15,9 @@ public class Virus : Entity
         //base.update(dt,w);
         base.im.rectTransform.position = position;
         //im.rectTransform. = dimension;
+
+        // TODO mettre les dims 
+
         if (Mathf.Abs(w.getPlayer().position.x - this.position.x) < 100  && Mathf.Abs(w.getPlayer().position.y - this.position.y) < 100) {
             w.hasWin = true;
             Debug.Log("win");
