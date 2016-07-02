@@ -21,7 +21,10 @@ public class main : MonoBehaviour {
     public Image mainScene;
     public Image mainMenu;
     private bool isInMenu = true;
-
+    Vector3 scenePosBegin;
+    public Camera cam;
+    public Canvas c1;
+    public Canvas c2;
     // Use this for initialization
 
     void Start() {
@@ -39,7 +42,7 @@ public class main : MonoBehaviour {
 
         liste_plateformes = listePlateformes.transform.GetComponentsInChildren<PlateformeScript>();
 
-        joueur = new Personnage(new Vector3(0, 500, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
+        joueur = new Personnage(new Vector3(0, 300, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
         virusOb = new Virus(new Vector3(200, 200, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus);
 
 
@@ -54,6 +57,7 @@ public class main : MonoBehaviour {
 
         //mainScene.gameObject.SetActive(false);
         //mainMenu.gameObject.SetActive(true);
+        scenePosBegin = mainScene.rectTransform.position;
         CreatGameSceneDefault();
 
     }
@@ -83,7 +87,9 @@ public class main : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+        //mainScene.rectTransform.position = w.getPlayer().position;
+        //c1. transform.position = -w.getPlayer().position ;
+        //c2.transform.position = new Vector3(0, -100, 0);
         if (mainGameIsRunning)
         {
             w.update(Time.deltaTime);
@@ -93,7 +99,11 @@ public class main : MonoBehaviour {
                 SceneManager.LoadScene("win");
                 //youWinText.rectTransform.position = new Vector3(200, 200, 0);
             }
+             
+
         }
+        
+
         /*
 
         //deplacer joueur

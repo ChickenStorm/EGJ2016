@@ -30,7 +30,7 @@ public class Entity {
 
 
     virtual public void update(float dt, World w) {
-
+        im.rectTransform.position = position; //- new Vector3(+40,-40,0) ;
         if (!isStatique) {
             position += vitesse;
         }

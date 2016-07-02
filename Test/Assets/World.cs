@@ -19,6 +19,10 @@ public class World
     public void update(float dt) { // input en entré
         player.update(dt, this);
         virus.update(dt, this);
+        for (int i = 0; i < platforms.Count; ++i)
+        {
+            platforms[i].update(dt,this);
+        }
 
     }
 
