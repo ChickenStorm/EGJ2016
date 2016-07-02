@@ -11,7 +11,16 @@ public class main : MonoBehaviour {
     public Image imageJoueur;
     public Image listePlateformes;
     public Image virus;
+
+    public Image listePlateformes2;
+    public Image listePlateformes3;
+    public Image groundI;
+
     PlateformeScript[] liste_plateformes;
+    PlateformeScript[] liste_plateformes2;
+    PlateformeScript[] liste_plateformes3;
+    PlateformeScript[] ground;
+
 
     public Image bille;
     public List<Biles> billesLi = new List<Biles>();
@@ -19,6 +28,7 @@ public class main : MonoBehaviour {
     public Text Debug;
     public Virus virusOb;
     public Text youWinText;
+    public Image BG;
     public World w;
     private List<Plateform> ptemp = new List<Plateform>();
     private bool mainGameIsRunning = false;
@@ -35,6 +45,11 @@ public class main : MonoBehaviour {
     Animation joueurAnim = new Animation("joueurAnim", 0.05f, 12);
     Animation billeAnim = new Animation("Bille", 0.05f, 1);
     Animation platAnim = new Animation("Platform", 0.05f, 1);
+    Animation platAnim2 = new Animation("Platform2", 0.05f, 1);
+    Animation platAnim3 = new Animation("Platform3", 0.05f, 1);
+    Animation platAnimGr = new Animation("PlatformGr", 0.05f, 1);
+
+
     public Text speed;
 
     void Start() {
@@ -52,7 +67,11 @@ public class main : MonoBehaviour {
         /************************************************/
 
         liste_plateformes = listePlateformes.transform.GetComponentsInChildren<PlateformeScript>();
-        
+        liste_plateformes2 = listePlateformes2.transform.GetComponentsInChildren<PlateformeScript>();
+        liste_plateformes3 = listePlateformes3.transform.GetComponentsInChildren<PlateformeScript>();
+        ground = groundI.transform.GetComponentsInChildren<PlateformeScript>();
+
+
         joueur = new Personnage(new Vector3(0, 300, 0), new Vector3(imageJoueur.rectTransform.rect.width, imageJoueur.rectTransform.rect.height, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur, joueurAnim);
         virusOb = new Virus(new Vector3(200, 1000, 0), new Vector3(2, 0, 0), new Vector3(virus.rectTransform.rect.width, virus.rectTransform.rect.height, 0), Resources.Load<Sprite>("DSC02576"), virus,2, bille, AnimVirus,billeAnim);
     
@@ -62,7 +81,29 @@ public class main : MonoBehaviour {
 
         for (int i = 0; i < liste_plateformes.Length; ++i)
         {
+            liste_plateformes[i].plateform.anim = platAnim;
             ptemp.Add(liste_plateformes[i].plateform);
+        }
+
+
+        for (int i = 0; i < liste_plateformes2.Length; ++i)
+        {
+            liste_plateformes[i].plateform.anim = platAnim2;
+            ptemp.Add(liste_plateformes2[i].plateform);
+        }
+
+
+        for (int i = 0; i < liste_plateformes3.Length; ++i)
+        {
+            liste_plateformes[i].plateform.anim = platAnim3;
+            ptemp.Add(liste_plateformes3[i].plateform);
+        }
+
+
+        for (int i = 0; i < ground.Length; ++i)
+        {
+            liste_plateformes[i].plateform.anim = platAnimGr;
+            ptemp.Add(ground[i].plateform);
         }
 
         w = new World(joueur, ptemp, virusOb, billesLi, bille, billeParent);
