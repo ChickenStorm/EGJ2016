@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class Entity {
-    protected Animation anim;
+    public Animation anim;
     public Vector3 position { get; set; }
     public Vector3 dimension { get; set; } 
     public Vector3 vitesse { get; set; }
