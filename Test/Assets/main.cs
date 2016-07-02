@@ -48,19 +48,19 @@ public class main : MonoBehaviour {
 
         liste_plateformes = listePlateformes.transform.GetComponentsInChildren<PlateformeScript>();
 
-        joueur = new Personnage(new Vector3(0, 300, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
-        virusOb = new Virus(new Vector3(200, 200, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus);
-
+        joueur = new Personnage(new Vector3(0, 300, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
+        virusOb = new Virus(new Vector3(200, 500, 0), new Vector3(2, 0, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus,2, bille);
+    
         Image b = Instantiate(bille);
         b.transform.SetParent(billeParent.transform);
-        billesLi.Add(new Biles(new Vector3(300, 300, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), b,1));
+        billesLi.Add(new Biles(new Vector3(300, 300, 0), new Vector3(0, 0, 0), new Vector3(10, 10, 0), Resources.Load<Sprite>("DSC02576"), b,1));
 
         for (int i = 0; i < liste_plateformes.Length; ++i)
         {
             ptemp.Add(liste_plateformes[i].plateform);
         }
 
-        w = new World(joueur, ptemp, virusOb, billesLi);
+        w = new World(joueur, ptemp, virusOb, billesLi, bille, billeParent);
         /************************************************/
 
         //mainScene.gameObject.SetActive(false);
@@ -96,7 +96,7 @@ public class main : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         //mainScene.rectTransform.position = w.getPlayer().position;
-        //c1. transform.position = -w.getPlayer().position ;
+        c1. transform.position = w.getPlayer().position ;
         //c2.transform.position = new Vector3(0, -100, 0);
         if (mainGameIsRunning)
         {

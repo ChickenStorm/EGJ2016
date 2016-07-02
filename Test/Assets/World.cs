@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine.UI;
 
 public class World
 {
@@ -11,8 +11,8 @@ public class World
     public bool hasWin { get; set; }
     public Virus virus { get; private set; }
     public List<Biles> billes;
-
-
+    public Image billeModel;
+    public GameObject billeP;
     public Personnage getPlayer()  { return player; }
 
 
@@ -31,13 +31,15 @@ public class World
     }
 
 
-    public World(Personnage p, List<Plateform> pla, Virus v,List<Biles> b)
+    public World(Personnage p, List<Plateform> pla, Virus v,List<Biles> b,Image billeModelP, GameObject billePP)
     {
  
         player = p;
         platforms = pla;
         virus = v;
         billes = b;
+        billeModel = billeModelP;
+        billeP = billePP;
     }
 
 
