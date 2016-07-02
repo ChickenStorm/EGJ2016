@@ -29,6 +29,40 @@ public class Personnage : Entity
 
     }
 
+
+    public override void update(float dt, World w)
+    {
+        //base.update(dt,w);
+
+
+        //deplacer joueur
+        im.rectTransform.position = position;
+
+        if (Input.GetKeyDown(KeyCode.D))
+            toucheEnfoncerD = true;
+        if (Input.GetKeyUp(KeyCode.D))
+            toucheEnfoncerD = false;
+        if (Input.GetKeyDown(KeyCode.A))
+            toucheEnfoncerA = true;
+        if (Input.GetKeyUp(KeyCode.A))
+            toucheEnfoncerA = false;
+        if (Input.GetKeyDown(KeyCode.W))
+            toucheEnfoncerD = true;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            foreach (Plateform p in w.platforms)
+                saut(p);
+        }
+
+        deplacer();
+        foreach (Plateform p in w.platforms)
+            collision(p);
+        validerDeplacement();
+        //Debug.text = joueur.position.x + ","+ joueur.position.y;
+    }
+
+
+
     public void deplacer()
     {
         deplacementCible = new Vector3();
