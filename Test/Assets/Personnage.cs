@@ -8,8 +8,9 @@ public class Personnage : Entity
     public bool toucheEnfoncerA { get; set; }
     public bool toucheEnfoncerSpace { get; set; }
     public float facteurVitesse { get; set; }
-
+    float timerCollision;
     bool aDejaSaute;
+    bool timerActive;
 
     Vector3 deplacementCible;
 
@@ -19,8 +20,8 @@ public class Personnage : Entity
         toucheEnfoncerA = false;
         toucheEnfoncerSpace = false;
         facteurVitesse = 5;
-
-
+        timerCollision = 0;
+        timerActive = false;
         aDejaSaute = false;
     }
 
@@ -64,6 +65,17 @@ public class Personnage : Entity
             collision(p);
         validerDeplacement();
         //Debug.text = joueur.position.x + ","+ joueur.position.y;
+
+        if (timerActive)
+        {
+            timerCollision += dt;
+        }
+        Debug.Log(timerCollision);
+        if (timerCollision > 2)
+        {
+            timerActive = false;
+            timerCollision = 0;
+        }
     }
 
 
@@ -80,7 +92,6 @@ public class Personnage : Entity
             deplacementCible = new Vector3(-facteurVitesse, 0, 0);
         }
         vitesse -= new Vector3(0, 1, 0);
-        Debug.Log("ok");
         deplacementCible += vitesse;
 
         aDejaSaute = false;
@@ -88,9 +99,9 @@ public class Personnage : Entity
 
     public void saut(Plateform platef)
     {
-        if (position.y - 15 < platef.position.y + platef.dimension.y && !aDejaSaute)
+        if ((position.y - 15 < platef.position.y + platef.dimension.y) && !aDejaSaute && (position.x < platef.position.x + platef.dimension.x) && (position.x + dimension.x > platef.position.x))
         {
-            vitesse += new Vector3(0, 20, 0);
+            vitesse += new Vector3(0, 25, 0);
             aDejaSaute = true;
         }
     }
@@ -102,40 +113,48 @@ public class Personnage : Entity
 
     public void collision(Plateform platef)
     {
-        if (platef != null)
+        if (!(position.x + dimension.x < platef.position.x - 30 || position.x > platef.position.x + platef.dimension.x + 30))
         {
-            float marge = 5;
-            Vector3 nPosition = position + deplacementCible;
-            //Debug.Log(nPosition.y + ", " + dimension.x + " : " + platef.position.x + " , " + platef.dimension.x);
-            if ((nPosition.x + dimension.x - marge > platef.position.x && nPosition.x + dimension.x - marge < platef.position.x + platef.dimension.x) || (nPosition.x + marge < platef.position.x + platef.dimension.x && nPosition.x + marge > platef.position.x))
-            {
-                //Debug.Log(nPosition);
-                if (position.y + marge < platef.position.y + platef.dimension.y && position.y + dimension.y - marge > platef.position.y)
-                {
-                    // Debug.Log("ok");
-                    deplacementCible.x = 0;
-                    vitesse = new Vector3(0, vitesse.y, vitesse.z);
 
-                    facteurVitesse -= 3;
-                    if(facteurVitesse <=5)
-                    {
-                        facteurVitesse = 5;
-                    }
-                    Debug.Log(facteurVitesse);
-                }
-            }
-            if ((nPosition.y + dimension.y - marge > platef.position.y && nPosition.y + dimension.y - marge < platef.position.y + platef.dimension.y) || (nPosition.y + marge < platef.position.y + platef.dimension.y && nPosition.y + marge > platef.position.y))
+            if (platef != null)
             {
-                if (position.x + marge < platef.position.x + platef.dimension.x && position.x + dimension.x - marge > platef.position.x)
+                float marge = 5;
+                Vector3 nPosition = position + deplacementCible;
+                //Debug.Log(nPosition.y + ", " + dimension.x + " : " + platef.position.x + " , " + platef.dimension.x);
+                if ((nPosition.x + dimension.x - marge > platef.position.x && nPosition.x + dimension.x - marge < platef.position.x + platef.dimension.x) || (nPosition.x + marge < platef.position.x + platef.dimension.x && nPosition.x + marge > platef.position.x))
                 {
-                    deplacementCible.y = 0;
-                    vitesse = new Vector3(vitesse.x, 0, vitesse.z);
+                    //Debug.Log(nPosition);
+                    if (position.y + marge < platef.position.y + platef.dimension.y && position.y + dimension.y - marge > platef.position.y)
+                    {
+                        // Debug.Log("ok");
+                        deplacementCible.x = 0;
+                        vitesse = new Vector3(0, vitesse.y, vitesse.z);
+
+                        if (!timerActive)
+                        {
+                            facteurVitesse -= 3;
+                            timerActive = true;
+                        }
+                        if (facteurVitesse <= 5)
+                        {
+                            facteurVitesse = 5;
+                        }
+                        Debug.Log(facteurVitesse);
+                    }
                 }
+                if ((nPosition.y + dimension.y - marge > platef.position.y && nPosition.y + dimension.y - marge < platef.position.y + platef.dimension.y) || (nPosition.y + marge < platef.position.y + platef.dimension.y && nPosition.y + marge > platef.position.y))
+                {
+                    if (position.x + marge < platef.position.x + platef.dimension.x && position.x + dimension.x - marge > platef.position.x)
+                    {
+                        deplacementCible.y = 0;
+                        vitesse = new Vector3(vitesse.x, 0, vitesse.z);
+                    }
+                }
+                //return false;
             }
-            //return false;
-        }
-        else
-        {
+            else
+            {
+            }
         }
     }
 
