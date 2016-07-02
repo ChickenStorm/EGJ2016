@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Entity {
@@ -7,8 +8,9 @@ public class Entity {
     public Vector3 vitesse { get; set; }
     public bool isStatique { get; set; }
     public Sprite image { get; set; }
+    public Image im { get; set; }
 
-    public Entity(Vector3 pos, Vector3 dim, Vector3 vit, bool isstat, Sprite im)
+    public Entity(Vector3 pos, Vector3 dim, Vector3 vit, bool isstat, Sprite im,Image impara)
     {
         vitesse = vit;
         position = pos;
@@ -25,6 +27,14 @@ public class Entity {
         dimension = new Vector3();
     }
 
+
+    public void update(float dt) {
+
+        position += vitesse;
+        // TODO update
+
+
+    }
 
 
 
