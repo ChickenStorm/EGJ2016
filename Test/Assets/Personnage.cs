@@ -8,6 +8,7 @@ public class Personnage : Entity
     public bool toucheEnfoncerA { get; set; }
     public bool toucheEnfoncerSpace { get; set; }
     public float facteurVitesse { get; set; }
+    float vitesseMin;
     float timerCollision;
     bool aDejaSaute;
     bool timerActive;
@@ -19,7 +20,8 @@ public class Personnage : Entity
         toucheEnfoncerD = false;
         toucheEnfoncerA = false;
         toucheEnfoncerSpace = false;
-        facteurVitesse = 5;
+        vitesseMin = 10;
+        facteurVitesse = vitesseMin;
         timerCollision = 0;
         timerActive = false;
         aDejaSaute = false;
@@ -82,17 +84,23 @@ public class Personnage : Entity
 
     public void deplacer()
     {
-        deplacementCible = new Vector3();
+        deplacementCible = new Vector3(deplacementCible.x, 0, deplacementCible.z);
         if (toucheEnfoncerD)
         {
             deplacementCible = new Vector3(facteurVitesse, 0, 0);
+            if(vitesse.x<10)
+            vitesse = new Vector3(vitesse.x+1, vitesse.y, vitesse.z);
         }
         if (toucheEnfoncerA)
         {
             deplacementCible = new Vector3(-facteurVitesse, 0, 0);
+            if (vitesse.x >- 10)
+                vitesse = new Vector3(vitesse.x - 1, vitesse.y, vitesse.z);
         }
         vitesse -= new Vector3(0, 1, 0);
+        vitesse = new Vector3(vitesse.x*0.6f, vitesse.y, vitesse.z);
         deplacementCible += vitesse;
+        deplacementCible = new Vector3(deplacementCible.x * 0.6f, deplacementCible.y, deplacementCible.z);
 
         aDejaSaute = false;
     }
@@ -135,9 +143,9 @@ public class Personnage : Entity
                             facteurVitesse -= 3;
                             timerActive = true;
                         }
-                        if (facteurVitesse <= 5)
+                        if (facteurVitesse <= vitesseMin)
                         {
-                            facteurVitesse = 5;
+                            facteurVitesse = vitesseMin;
                         }
                         Debug.Log(facteurVitesse);
                     }
