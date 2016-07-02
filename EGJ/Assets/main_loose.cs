@@ -15,7 +15,10 @@ public class main_loose : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        startGameButton.onClick.AddListener(() => { CreatGameSceneDefault(); });
+        if (startGameButton != null) /* correction bug*/
+        {   
+            startGameButton.onClick.AddListener(() => { CreatGameSceneDefault(); });
+        }
     }
 
     

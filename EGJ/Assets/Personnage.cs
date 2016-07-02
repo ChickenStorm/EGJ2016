@@ -13,6 +13,8 @@ public class Personnage : Entity
     bool aDejaSaute;
     bool timerActive;
 
+    int numberOfDeath = 0;
+
 
     float timeFaste1;
     float timeFaste2;
@@ -50,6 +52,10 @@ public class Personnage : Entity
         if (position.y < -1000)
         {
             position = new Vector3(0, 500, 0);
+            ++numberOfDeath;
+
+            w.virus.position = new Vector3(200+300* numberOfDeath, 1000, 0);
+            facteurVitesse = vitesseMin;
         }
 
         //deplacer joueur
@@ -94,19 +100,24 @@ public class Personnage : Entity
 
         if (Mathf.Abs(deplacementCible.x) < 0.5f)
         {
+            im.transform.localScale = new Vector3(1, 1, 1);
+            dimension = new Vector3(71.5f, 100, 0);
+            Debug.Log(im.rectTransform.rect);
+            //im.rectTransform.rect.Set(0100, 100, 2000, 100);
+            Debug.Log(im.rectTransform.rect);
             AnimationStill.update(dt);
             im.sprite = AnimationStill.image;
             timeFaste1 = 0;
             timeFaste2 = 0;
             //im.r
         }
-        else if (Mathf.Abs(deplacementCible.x) > 20)
+        else if (Mathf.Abs(deplacementCible.x) > 11)
         {
 
             if (timeFaste1 < 1)
             {
                 timeFaste1 += dt;
-                anim.update(dt * facteurVitesse / 5);
+                anim.update(dt * facteurVitesse / 100);
                 im.sprite = anim.image;
                 AnimationTransit.timer = 0;
             }
@@ -120,16 +131,23 @@ public class Personnage : Entity
             else
             {
                 //AnimationTransit.timer = 0;
-                //im.rectTransform = 200;
+                //im.rectTransform.anchoredPosition = new Vector2(0.01f, 0);
+                //im.transform.Translate(new Vector3(-100,0,0));
+                im.transform.localScale = new Vector3(2.7972027972027972027972027972028f, 1, 1);
+                dimension = new Vector3(200, 100, 0);
+                //im.rectTransform.anchoredPosition = new Vector2(0, 0);
                 AnimationFast.update(dt);
                 im.sprite = AnimationFast.image;
             }
-        }
+        }   
         else
         {
             //AnimationStill.hasUpdate = false;
             //im.rectTransform.rect.width = 71.5f;
-            anim.update(dt * facteurVitesse / 5);
+
+            im.transform.localScale = new Vector3(1, 1, 1);
+            dimension = new Vector3(71.5f, 100, 0);
+            anim.update(dt * facteurVitesse / 15);
             im.sprite = anim.image;
             timeFaste1 = 0;
             timeFaste2 = 0;

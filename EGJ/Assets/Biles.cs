@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class Biles : Entity
 {
-
+    float timer;
+    const float maxTime = 30;
     Vector3 deplacementCible= new Vector3(0,0,0);
 
 
@@ -19,6 +20,12 @@ public class Biles : Entity
     public override void update(float dt, World w)
     {
         base.update(dt, w);
+        timer += dt;
+
+        if (timer > maxTime) {
+            isActive = false;
+            position = new Vector3(-1000, 0, 0);
+        }
 
         if (isActive && Mathf.Abs(w.getPlayer().position.x - this.position.x) < base.dimension.x+ w.getPlayer().dimension.x-10 && Mathf.Abs(w.getPlayer().position.y - this.position.y) < base.dimension.y + w.getPlayer().dimension.y-10)
         {
@@ -27,11 +34,17 @@ public class Biles : Entity
             position = new Vector3(-1000, 0, 0);
             w.getPlayer().facteurVitesse += value;
         }
+        if (isActive)
+        {
+            deplacer(dt);
+            foreach (Plateform p in w.platforms)    
+            {
+                collision(p);
+            }
+            validerDeplacement();
+        }
 
-        deplacer(dt);
-        foreach (Plateform p in w.platforms)
-            collision(p);
-        validerDeplacement();
+        
 
     }
 

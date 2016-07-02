@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 public class main_menu : MonoBehaviour {
 
     public Button startGameButton;

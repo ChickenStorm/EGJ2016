@@ -9,7 +9,7 @@ public class World
     private Personnage player;
     public List<Plateform> platforms { get; set; }
     public bool hasWin { get; set; }
-    public Virus virus { get; private set; }
+    public Virus virus { get; set; }
     public List<Biles> billes;
     public Image billeModel;
     public GameObject billeP;
