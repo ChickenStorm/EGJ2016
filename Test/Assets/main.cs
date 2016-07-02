@@ -12,6 +12,10 @@ public class main : MonoBehaviour {
     public Image listePlateformes;
     public Image virus;
     PlateformeScript[] liste_plateformes;
+
+    public Image bille;
+    public List<Biles> billesLi = new List<Biles>();
+
     public Text Debug;
     public Virus virusOb;
     public Text youWinText;
@@ -21,7 +25,11 @@ public class main : MonoBehaviour {
     public Image mainScene;
     public Image mainMenu;
     private bool isInMenu = true;
-
+    Vector3 scenePosBegin;
+    public Camera cam;
+    public Canvas c1;
+    public Canvas c2;
+    public GameObject billeParent;
     // Use this for initialization
 
     void Start() {
@@ -35,25 +43,29 @@ public class main : MonoBehaviour {
 
 
 
+
         /************************************************/
 
         liste_plateformes = listePlateformes.transform.GetComponentsInChildren<PlateformeScript>();
 
-        joueur = new Personnage(new Vector3(0, 500, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
-        virusOb = new Virus(new Vector3(200, 200, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus);
-
-
+        joueur = new Personnage(new Vector3(0, 300, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
+        virusOb = new Virus(new Vector3(200, 500, 0), new Vector3(2, 0, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus,2, bille);
+    
+        Image b = Instantiate(bille);
+        b.transform.SetParent(billeParent.transform);
+        billesLi.Add(new Biles(new Vector3(300, 300, 0), new Vector3(0, 0, 0), new Vector3(10, 10, 0), Resources.Load<Sprite>("DSC02576"), b,1));
 
         for (int i = 0; i < liste_plateformes.Length; ++i)
         {
             ptemp.Add(liste_plateformes[i].plateform);
         }
 
-        w = new World(joueur, ptemp, virusOb);
+        w = new World(joueur, ptemp, virusOb, billesLi, bille, billeParent);
         /************************************************/
 
         //mainScene.gameObject.SetActive(false);
         //mainMenu.gameObject.SetActive(true);
+        scenePosBegin = mainScene.rectTransform.position;
         CreatGameSceneDefault();
 
     }
@@ -83,7 +95,9 @@ public class main : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+        //mainScene.rectTransform.position = w.getPlayer().position;
+        c1. transform.position = w.getPlayer().position ;
+        //c2.transform.position = new Vector3(0, -100, 0);
         if (mainGameIsRunning)
         {
             w.update(Time.deltaTime);
@@ -93,7 +107,11 @@ public class main : MonoBehaviour {
                 SceneManager.LoadScene("win");
                 //youWinText.rectTransform.position = new Vector3(200, 200, 0);
             }
+             
+
         }
+        
+
         /*
 
         //deplacer joueur

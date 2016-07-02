@@ -8,4 +8,9 @@ public class Plateform : Entity{
     {
 
     }
+    public override void update(float dt, World w)
+    {
+        base.update(dt, w);
+
+    }
 }
