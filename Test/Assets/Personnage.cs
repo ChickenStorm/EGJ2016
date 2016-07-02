@@ -93,7 +93,7 @@ public class Personnage : Entity
        
 
         GameObject.Find("Debug2").GetComponent<Text>().text = deplacementCible.x+"";
-        if (Mathf.Abs(deplacementCible.x) < 0.01f) {
+        if (Mathf.Abs(deplacementCible.x) < 0.5f) {
             AnimationStill.update(dt);
             im.sprite = AnimationStill.image;
             timeFaste1 = 0;
@@ -145,30 +145,24 @@ public class Personnage : Entity
         deplacementCible = new Vector3(deplacementCible.x, 0, deplacementCible.z);
         if (toucheEnfoncerD)
         {
-<<<<<<< HEAD
-            deplacementCible = new Vector3(facteurVitesse, 0, 0);
+            deplacementCible = new Vector3(facteurVitesse*30*dt, 0, 0);
             if(vitesse.x<10)
             vitesse = new Vector3(vitesse.x+1, vitesse.y, vitesse.z);
         }
         if (toucheEnfoncerA)
         {
-            deplacementCible = new Vector3(-facteurVitesse, 0, 0);
+            deplacementCible = new Vector3(-facteurVitesse * 30 * dt, 0, 0);
             if (vitesse.x >- 10)
                 vitesse = new Vector3(vitesse.x - 1, vitesse.y, vitesse.z);
         }
-        vitesse -= new Vector3(0, 1, 0);
+        vitesse -= new Vector3(0, 1*30*dt, 0);
         vitesse = new Vector3(vitesse.x*0.6f, vitesse.y, vitesse.z);
-=======
-            deplacementCible = new Vector3(facteurVitesse, 0, 0) *30*dt;
-        }
-        if (toucheEnfoncerA)
-        {
-            deplacementCible = new Vector3(-facteurVitesse, 0, 0)*dt*30;
-        }
-        vitesse -= new Vector3(0, 1, 0)*30*dt;
->>>>>>> origin/master
         deplacementCible += vitesse;
         deplacementCible = new Vector3(deplacementCible.x * 0.6f, deplacementCible.y, deplacementCible.z);
+
+        if (deplacementCible.x < 1e-3) {
+            deplacementCible.x = 0;
+        }
 
         aDejaSaute = false;
     }
