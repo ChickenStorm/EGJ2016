@@ -30,7 +30,11 @@ public class main : MonoBehaviour {
     public Canvas c1;
     public Canvas c2;
     public GameObject billeParent;
-    // Use this for initialization
+    // Use this for initialization$
+
+
+
+    public Text speed;
 
     void Start() {
         //mainScene.gameObject.active = true;
@@ -98,6 +102,12 @@ public class main : MonoBehaviour {
         //mainScene.rectTransform.position = w.getPlayer().position;
         c1. transform.position = w.getPlayer().position ;
         //c2.transform.position = new Vector3(0, -100, 0);
+        speed.text = "";
+        for (int i = 0; i < w.getPlayer().facteurVitesse; ++i)
+        {
+            speed.text += "|";
+        }
+
         if (mainGameIsRunning)
         {
             w.update(Time.deltaTime);
