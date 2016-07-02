@@ -92,7 +92,6 @@ public class Personnage : Entity
         float animMult = Mathf.Sign(deplacementCible.x);
 
 
-        GameObject.Find("Debug2").GetComponent<Text>().text = deplacementCible.x + "";
         if (Mathf.Abs(deplacementCible.x) < 0.5f)
         {
             AnimationStill.update(dt);
@@ -152,13 +151,14 @@ public class Personnage : Entity
         if (toucheEnfoncerD)
         {
             deplacementCible = new Vector3(facteurVitesse * 30 * dt, 0, 0);
-            if (vitesse.x < 10)
+            if (vitesse.x < 10 && vitesse.x>0)
                 vitesse = new Vector3(vitesse.x + 1, vitesse.y, vitesse.z);
         }
         if (toucheEnfoncerA)
         {
+
             deplacementCible = new Vector3(-facteurVitesse * 30 * dt, 0, 0);
-            if (vitesse.x > -10)
+            if (vitesse.x > -10 && vitesse.x<0)
                 vitesse = new Vector3(vitesse.x - 1, vitesse.y, vitesse.z);
         }
         vitesse -= new Vector3(0, 1 * 30 * dt, 0);
@@ -176,8 +176,12 @@ public class Personnage : Entity
 
     public void saut(Plateform platef)
     {
-        if ((position.y - 15 < platef.position.y + platef.dimension.y) && !aDejaSaute && (position.x < platef.position.x + platef.dimension.x) && (position.x + dimension.x > platef.position.x))
+        float marge = 6.0f;
+        if ((position.y - 15 < platef.position.y + platef.dimension.y) && (position.y - 15 > platef.position.y) && !aDejaSaute 
+            && (position.x + dimension.x -15 > platef.position.x) && (position.x +15 < platef.position.x + platef.dimension.x))//(position.x-marge < platef.position.x + platef.dimension.x) && (position.x + dimension.x + marge > platef.position.x))
         {
+            GameObject.Find("Debug2").GetComponent<Text>().text = position + ";"+platef.position +";"+platef.dimension;
+
             vitesse += new Vector3(0, 25, 0);
             aDejaSaute = true;
         }
@@ -203,7 +207,8 @@ public class Personnage : Entity
                     //Debug.Log(nPosition);
                     if (position.y + marge < platef.position.y + platef.dimension.y && position.y + dimension.y - marge > platef.position.y)
                     {
-                        // Debug.Log("ok");
+
+                         Debug.Log("ok");
                         deplacementCible.x = 0;
                         vitesse = new Vector3(0, vitesse.y, vitesse.z);
 
@@ -223,8 +228,11 @@ public class Personnage : Entity
                 {
                     if (position.x + marge < platef.position.x + platef.dimension.x && position.x + dimension.x - marge > platef.position.x)
                     {
-                        deplacementCible.y = 0;
-                        vitesse = new Vector3(vitesse.x, 0, vitesse.z);
+                       
+                        
+                            Debug.Log("ko "+platef.position + ";" +platef.dimension);
+                            deplacementCible.y = 0;
+                            vitesse = new Vector3(vitesse.x, 0, vitesse.z);
                     }
                 }
                 //return false;
