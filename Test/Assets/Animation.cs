@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class Animation
 {
@@ -9,6 +11,8 @@ public class Animation
     int nombre;
     public bool hasUpdate = false;
     public Sprite image { get; private set; }
+    List<Sprite> listeSprite;
+    bool firstTime;
 
     public Animation(string nomm,  float deltatmp, int nbr)
     {
@@ -16,16 +20,29 @@ public class Animation
         timer = 0;
         deltatemps = deltatmp;
         nombre = nbr;
+        listeSprite = new List<Sprite>();
+        listeSprite.Clear();
+
+        firstTime = true;
+
     }
 
     public void update(float dt)
     {
-        
+        if (firstTime)
+        {
+            for (int i = 0; i < nombre; i++)
+            {
+                Sprite sptm = Resources.Load<Sprite>(nom + "/" + i);
+                listeSprite.Add(sptm);
+            }
+            firstTime = false;
+
+        }
         if (! hasUpdate || nombre != 1) {
             hasUpdate = true;
             timer += dt;
-            image = Resources.Load<Sprite>(nom + "/" + (int)(timer / deltatemps) % nombre);
-            Debug.Log((int)(timer / deltatemps) % nombre);
+            image = listeSprite[(int)(timer / deltatemps) % nombre];
         }
     }
 }

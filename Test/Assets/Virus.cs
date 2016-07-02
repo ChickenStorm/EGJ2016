@@ -26,7 +26,7 @@ public class Virus : Entity
         float h1 = hasard.Next(-10, 11);
         float h2 = hasard.Next(-10, 11);
 
-        w.billes.Add(new Biles(position, new Vector3(h1, h2, 0), new Vector3(50, 50, 0), Resources.Load<Sprite>("DSC02576"), b, 3, billeAnim));
+        w.billes.Add(new Biles(position, new Vector3(h1, h2, 0), new Vector3(50, 50, 0), Resources.Load<Sprite>("DSC02576"), b, 10, billeAnim));
     }
 
 
