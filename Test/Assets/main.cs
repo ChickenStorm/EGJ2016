@@ -52,7 +52,7 @@ public class main : MonoBehaviour {
         virusOb = new Virus(new Vector3(200, 200, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus);
 
         Image b = Instantiate(bille);
-        b.transform.SetParent(c1);
+        b.transform.SetParent(billeParent.transform);
         billesLi.Add(new Biles(new Vector3(300, 300, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), b,1));
 
         for (int i = 0; i < liste_plateformes.Length; ++i)
