@@ -11,11 +11,13 @@ public class Virus : Entity
 
 
     public override void update(float dt, World w) {
-
-        base.update(dt,w);
-
-        if (Mathf.Abs(w.getPlayer().position.x - this.position.x) < 10f  && Mathf.Abs(w.getPlayer().position.y - this.position.y) < 10f) {
-
+        
+        //base.update(dt,w);
+        base.im.rectTransform.position = position;
+        //im.rectTransform. = dimension;
+        if (Mathf.Abs(w.getPlayer().position.x - this.position.x) < 100  && Mathf.Abs(w.getPlayer().position.y - this.position.y) < 100) {
+            w.hasWin = true;
+            Debug.Log("win");
         }
         
     }

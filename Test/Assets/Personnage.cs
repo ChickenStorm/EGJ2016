@@ -66,10 +66,10 @@ public class Personnage : Entity
         //Debug.Log(nPosition.y + ", " + dimension.x + " : " + platef.position.x + " , " + platef.dimension.x);
         if ((nPosition.x + dimension.x > platef.position.x && nPosition.x + dimension.x < platef.position.x + platef.dimension.x) || (nPosition.x < platef.position.x + platef.dimension.x && nPosition.x > platef.position.x))
         {
-            Debug.Log(nPosition);
+            //Debug.Log(nPosition);
             if (position.y < platef.position.y + platef.dimension.y && position.y + dimension.y > platef.position.y)
             {
-                Debug.Log("ok");
+               // Debug.Log("ok");
                 deplacementCible.x = 0;
                 vitesse = new Vector3(0, vitesse.y, vitesse.z);
             }

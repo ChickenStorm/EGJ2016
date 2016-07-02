@@ -7,7 +7,7 @@ public class World
 
     private Personnage player;
     public Plateform[] platforms { get; set; }
-
+    public bool hasWin { get; set; }
     public Virus virus { get; private set; }
 
 
@@ -15,7 +15,7 @@ public class World
 
 
     public void update(float dt) { // input en entré
-        player.update(dt, this);
+        //player.update(dt, this);
         virus.update(dt, this);
 
     }

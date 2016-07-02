@@ -11,19 +11,29 @@ public class main : MonoBehaviour {
     PlateformeScript[] liste_plateformes;
     public Text Debug;
     public Virus virusOb;
-
+    public Text youWinText;
+    public World w;
     // Use this for initialization
     void Start () {
         joueur = new Personnage(new Vector3(0, 500, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
-        virusOb = new Virus(new Vector3(20, 100, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus);
+        virusOb = new Virus(new Vector3(200, 200, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus);
 
 
         liste_plateformes = listePlateformes.transform.GetComponentsInChildren<PlateformeScript>();
+        w = new World(joueur,new Plateform[0], virusOb);
 
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
+
+        w.update(1);
+
+        if (w.hasWin) {
+            youWinText.rectTransform.position = new Vector3 (200,200,0);
+        }
+        
+
         //deplacer joueur
         imageJoueur.rectTransform.position = joueur.position;
         
