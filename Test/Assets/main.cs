@@ -144,6 +144,7 @@ public class main : MonoBehaviour {
         //mainScene.rectTransform.position = w.getPlayer().position;
         c1. transform.position = w.getPlayer().position ;
         //c2.transform.position = new Vector3(0, -100, 0);
+        BG.rectTransform.position = w.getPlayer().position/6;
         speed.text = "";
         for (int i = 0; i < w.getPlayer().facteurVitesse; ++i)
         {
@@ -156,7 +157,7 @@ public class main : MonoBehaviour {
 
             if (w.hasWin)
             {
-                SceneManager.LoadScene("win");
+                //SceneManager.LoadScene("win");
                 //youWinText.rectTransform.position = new Vector3(200, 200, 0);
             }
              
