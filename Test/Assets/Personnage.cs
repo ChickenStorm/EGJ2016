@@ -13,16 +13,6 @@ public class Personnage : Entity
     bool aDejaSaute;
     bool timerActive;
 
-
-    float timeFaste1;
-    float timeFaste2;
-
-
-    private Animation AnimationStill = new Animation("joueurStill",0.05f,1);
-    private Animation AnimationFast = new Animation("joueurFast", 0.05f, 1);
-    private Animation AnimationTransit = new Animation("joueurTransit", 0.05f, 1);
-
-
     Vector3 deplacementCible;
 
     public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri, Image im, Animation anim) : base(pos, dim, vit, false, spri, im, anim)
@@ -45,7 +35,8 @@ public class Personnage : Entity
 
     public override void update(float dt, World w)
     {
-
+        anim.update(dt);
+        im.sprite = anim.image;
         //base.update(dt,w);
         if (position.y < -1000)
         {
@@ -71,7 +62,7 @@ public class Personnage : Entity
                 saut(p);
         }
 
-        deplacer(dt);
+        deplacer();
         foreach (Plateform p in w.platforms)
             collision(p);
         validerDeplacement();
@@ -81,12 +72,13 @@ public class Personnage : Entity
         {
             timerCollision += dt;
         }
-        //Debug.Log(timerCollision);
+        Debug.Log(timerCollision);
         if (timerCollision > 2)
         {
             timerActive = false;
             timerCollision = 0;
         }
+
 
         //Debug.Log(deplacementCible.x);
         float animMult = Mathf.Sign(deplacementCible.x);
@@ -136,16 +128,21 @@ public class Personnage : Entity
         {
             im.transform.localScale = new Vector3(1, 1, 1);
         }*/
+
     }
 
 
 
-    public void deplacer(float dt)
+    public void deplacer()
     {
         deplacementCible = new Vector3(deplacementCible.x, 0, deplacementCible.z);
         if (toucheEnfoncerD)
         {
+
+            deplacementCible = new Vector3(facteurVitesse, 0, 0);
+
             deplacementCible = new Vector3(facteurVitesse*30*dt, 0, 0);
+
             if(vitesse.x<10)
             vitesse = new Vector3(vitesse.x+1, vitesse.y, vitesse.z);
         }
@@ -174,6 +171,12 @@ public class Personnage : Entity
             vitesse += new Vector3(0, 25, 0);
             aDejaSaute = true;
         }
+
+        /*im.rectTransform.anchoredPosition = new Vector2(0.5f, 0.5f);
+
+        im.rectTransform.localScale = new Vector3(im.rectTransform.localScale.x*(-1), 1,1);
+        im.rectTransform.anchoredPosition = new Vector2(0f, 0f);
+        */
     }
 
     public void validerDeplacement()
