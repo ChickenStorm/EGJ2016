@@ -4,10 +4,10 @@ using System.Collections;
 public class Animation
 {
     string nom;
-    float timer;
+    public float timer;
     float deltatemps;
     int nombre;
-    bool hasUpdate = false;
+    public bool hasUpdate = false;
     public Sprite image { get; private set; }
 
     public Animation(string nomm,  float deltatmp, int nbr)

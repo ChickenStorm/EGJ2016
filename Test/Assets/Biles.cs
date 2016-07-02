@@ -28,7 +28,7 @@ public class Biles : Entity
             w.getPlayer().facteurVitesse += value;
         }
 
-        deplacer();
+        deplacer(dt);
         foreach (Plateform p in w.platforms)
             collision(p);
         validerDeplacement();
@@ -40,11 +40,11 @@ public class Biles : Entity
         position += deplacementCible;
     }
 
-    public void deplacer()
+    public void deplacer(float dt)
     {
         deplacementCible = new Vector3();
        
-        vitesse -= new Vector3(0, 1, 0);
+        vitesse -= new Vector3(0, 1, 0)*30*dt;
         deplacementCible += vitesse;
     }
 

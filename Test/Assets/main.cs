@@ -73,7 +73,7 @@ public class main : MonoBehaviour {
 
 
         joueur = new Personnage(new Vector3(0, 300, 0), new Vector3(imageJoueur.rectTransform.rect.width, imageJoueur.rectTransform.rect.height, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur, joueurAnim);
-        virusOb = new Virus(new Vector3(200, 1000, 0), new Vector3(2, 0, 0), new Vector3(virus.rectTransform.rect.width, virus.rectTransform.rect.height, 0), Resources.Load<Sprite>("DSC02576"), virus,2, bille, AnimVirus,billeAnim);
+        virusOb = new Virus(new Vector3(200, 1000, 0), new Vector3(8, 0, 0), new Vector3(virus.rectTransform.rect.width, virus.rectTransform.rect.height, 0), Resources.Load<Sprite>("DSC02576"), virus,2, bille, AnimVirus,billeAnim);
     
         Image b = Instantiate(bille);
         b.transform.SetParent(billeParent.transform);
@@ -144,7 +144,7 @@ public class main : MonoBehaviour {
         //mainScene.rectTransform.position = w.getPlayer().position;
         c1. transform.position = w.getPlayer().position +new Vector3(400,0,0) ;
         //c2.transform.position = new Vector3(0, -100, 0);
-        BG.rectTransform.position = w.getPlayer().position/6;
+        BG.rectTransform.position = w.getPlayer().position/5;
         speed.text = "";
         for (int i = 0; i < w.getPlayer().facteurVitesse; ++i)
         {
