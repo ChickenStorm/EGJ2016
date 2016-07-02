@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class main : MonoBehaviour {
 
@@ -13,6 +14,8 @@ public class main : MonoBehaviour {
     public Virus virusOb;
     public Text youWinText;
     public World w;
+    private List<Plateform> ptemp = new List<Plateform>();
+
     // Use this for initialization
     void Start () {
         joueur = new Personnage(new Vector3(0, 500, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
@@ -20,19 +23,29 @@ public class main : MonoBehaviour {
 
 
         liste_plateformes = listePlateformes.transform.GetComponentsInChildren<PlateformeScript>();
-        w = new World(joueur,new Plateform[0], virusOb);
+
+        
+
+
+        for (int i =0; i< liste_plateformes.Length;++i) {
+            ptemp.Add(liste_plateformes[i].plateform);
+        }
+
+
+
+        w = new World(joueur, ptemp, virusOb);
 
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        w.update(1);
+        w.update(Time.deltaTime);
 
         if (w.hasWin) {
             youWinText.rectTransform.position = new Vector3 (200,200,0);
         }
-        
+        /*
 
         //deplacer joueur
         imageJoueur.rectTransform.position = joueur.position;
@@ -58,5 +71,7 @@ public class main : MonoBehaviour {
             joueur.collision(p.plateform);
         joueur.validerDeplacement();
         Debug.text = joueur.position.x + ","+ joueur.position.y;
+
+    */
     }
 }

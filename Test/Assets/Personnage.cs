@@ -33,7 +33,9 @@ public class Personnage : Entity
     public override void update(float dt, World w)
     {
         //base.update(dt,w);
-
+        if (position.y < -1000) {
+            position = new Vector3(0, 500, 0);
+        }
 
         //deplacer joueur
         im.rectTransform.position = position;

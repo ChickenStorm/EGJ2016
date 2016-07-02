@@ -29,9 +29,11 @@ public class Entity {
     }
 
 
-    virtual public void update(float dt,World w) {
+    virtual public void update(float dt, World w) {
 
-        position += vitesse;
+        if (!isStatique) {
+            position += vitesse;
+        }
         // TODO update
 
 
