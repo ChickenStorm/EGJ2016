@@ -53,8 +53,8 @@ public class main : MonoBehaviour {
 
         liste_plateformes = listePlateformes.transform.GetComponentsInChildren<PlateformeScript>();
         
-        joueur = new Personnage(new Vector3(0, 300, 0), new Vector3(71.5f, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur, joueurAnim);
-        virusOb = new Virus(new Vector3(200, 1000, 0), new Vector3(2, 0, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus,2, bille, AnimVirus,billeAnim);
+        joueur = new Personnage(new Vector3(0, 300, 0), new Vector3(imageJoueur.rectTransform.rect.width, imageJoueur.rectTransform.rect.height, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur, joueurAnim);
+        virusOb = new Virus(new Vector3(200, 1000, 0), new Vector3(2, 0, 0), new Vector3(virus.rectTransform.rect.width, virus.rectTransform.rect.height, 0), Resources.Load<Sprite>("DSC02576"), virus,2, bille, AnimVirus,billeAnim);
     
         Image b = Instantiate(bille);
         b.transform.SetParent(billeParent.transform);

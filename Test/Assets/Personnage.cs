@@ -88,7 +88,7 @@ public class Personnage : Entity
     {
         if (position.y - 15 < platef.position.y + platef.dimension.y && !aDejaSaute)
         {
-            vitesse += new Vector3(0, 15, 0);
+            vitesse += new Vector3(0, 20, 0);
             aDejaSaute = true;
         }
     }

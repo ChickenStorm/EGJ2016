@@ -18,7 +18,7 @@ public class Entity {
         position = pos;
         isStatique = isstat;
         image = s;
-        dimension = (Vector3)im.rectTransform.rect.size; //
+        dimension = dim; //
         im = impara;
         isActive = isActiveP;
         anim = animP;
