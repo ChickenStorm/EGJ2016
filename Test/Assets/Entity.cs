@@ -11,6 +11,9 @@ public class Entity {
     public Sprite image { get; set; }
     public Image im { get; set; }
     public bool isActive { get; set; }
+
+    
+
     //TODO enlevé dim
     public Entity(Vector3 pos, Vector3 dim, Vector3 vit, bool isstat, Sprite s,Image impara, Animation animP , bool isActiveP = true)
     {
