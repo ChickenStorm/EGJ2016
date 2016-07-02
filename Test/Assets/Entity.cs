@@ -10,13 +10,14 @@ public class Entity {
     public Sprite image { get; set; }
     public Image im { get; set; }
 
-    public Entity(Vector3 pos, Vector3 dim, Vector3 vit, bool isstat, Sprite im,Image impara)
+    public Entity(Vector3 pos, Vector3 dim, Vector3 vit, bool isstat, Sprite s,Image impara)
     {
         vitesse = vit;
         position = pos;
         isStatique = isstat;
-        image = im;
+        image = s;
         dimension = dim;
+        im = impara;
     }
     public Entity()
     {

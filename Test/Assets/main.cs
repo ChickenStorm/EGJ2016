@@ -15,7 +15,7 @@ public class main : MonoBehaviour {
     // Use this for initialization
     void Start () {
         joueur = new Personnage(new Vector3(0, 500, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"));
-        //virus = new Virus(new Vector3(20, 100, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"));
+        virusOb = new Virus(new Vector3(20, 100, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus);
 
 
         liste_plateformes = listePlateformes.transform.GetComponentsInChildren<PlateformeScript>();
