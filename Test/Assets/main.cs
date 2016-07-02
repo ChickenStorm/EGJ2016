@@ -5,7 +5,7 @@ using System.Collections;
 public class main : MonoBehaviour {
 
     Personnage joueur;
-    public Image ImageJoueur;
+    public Image imageJoueur;
     public Image listePlateformes;
     public Image virus;
     PlateformeScript[] liste_plateformes;
@@ -14,7 +14,7 @@ public class main : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        joueur = new Personnage(new Vector3(0, 500, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"));
+        joueur = new Personnage(new Vector3(0, 500, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
         virusOb = new Virus(new Vector3(20, 100, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus);
 
 
@@ -25,7 +25,7 @@ public class main : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //deplacer joueur
-        ImageJoueur.rectTransform.position = joueur.position;
+        imageJoueur.rectTransform.position = joueur.position;
         
         if (Input.GetKeyDown(KeyCode.D))
             joueur.toucheEnfoncerD = true;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Personnage : Entity
 {
@@ -12,7 +13,7 @@ public class Personnage : Entity
 
     Vector3 deplacementCible;
 
-    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri) : base(pos, dim, vit, false, spri)
+    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri,Image im) : base(pos, dim, vit, false, spri,im)
     {
         toucheEnfoncerD = false;
         toucheEnfoncerA = false;
@@ -23,7 +24,7 @@ public class Personnage : Entity
         aDejaSaute = false;
     }
 
-    public Personnage() : this(new Vector3(), new Vector3(), new Vector3(), new Sprite())
+    public Personnage(Image im) : this(new Vector3(), new Vector3(), new Vector3(), new Sprite(),im)
     {
 
     }
