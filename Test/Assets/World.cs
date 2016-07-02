@@ -10,7 +10,7 @@ public class World
     public List<Plateform> platforms { get; set; }
     public bool hasWin { get; set; }
     public Virus virus { get; private set; }
-    
+    public List<Biles> billes;
 
 
     public Personnage getPlayer()  { return player; }
@@ -23,16 +23,21 @@ public class World
         {
             platforms[i].update(dt,this);
         }
+        for (int i = 0; i < billes.Count; ++i)
+        {
+            billes[i].update(dt, this);
+        }
 
     }
 
 
-    public World(Personnage p, List<Plateform> pla, Virus v)
+    public World(Personnage p, List<Plateform> pla, Virus v,List<Biles> b)
     {
  
         player = p;
         platforms = pla;
         virus = v;
+        billes = b;
     }
 
 

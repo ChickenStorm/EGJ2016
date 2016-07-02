@@ -12,6 +12,10 @@ public class main : MonoBehaviour {
     public Image listePlateformes;
     public Image virus;
     PlateformeScript[] liste_plateformes;
+
+    public Image bille;
+    public List<Biles> billesLi = new List<Biles>();
+
     public Text Debug;
     public Virus virusOb;
     public Text youWinText;
@@ -25,6 +29,7 @@ public class main : MonoBehaviour {
     public Camera cam;
     public Canvas c1;
     public Canvas c2;
+    public GameObject billeParent;
     // Use this for initialization
 
     void Start() {
@@ -38,6 +43,7 @@ public class main : MonoBehaviour {
 
 
 
+
         /************************************************/
 
         liste_plateformes = listePlateformes.transform.GetComponentsInChildren<PlateformeScript>();
@@ -45,14 +51,16 @@ public class main : MonoBehaviour {
         joueur = new Personnage(new Vector3(0, 300, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur);
         virusOb = new Virus(new Vector3(200, 200, 0), new Vector3(100, 100, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), virus);
 
-
+        Image b = Instantiate(bille);
+        b.transform.SetParent(c1);
+        billesLi.Add(new Biles(new Vector3(300, 300, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), b,1));
 
         for (int i = 0; i < liste_plateformes.Length; ++i)
         {
             ptemp.Add(liste_plateformes[i].plateform);
         }
 
-        w = new World(joueur, ptemp, virusOb);
+        w = new World(joueur, ptemp, virusOb, billesLi);
         /************************************************/
 
         //mainScene.gameObject.SetActive(false);

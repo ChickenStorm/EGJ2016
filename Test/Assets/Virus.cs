@@ -12,10 +12,10 @@ public class Virus : Entity
 
     public override void update(float dt, World w) {
 
-        //base.update(dt,w);
-        position += vitesse * dt;
+        base.update(dt,w);
+        //position += vitesse * dt;
 
-        base.im.rectTransform.position = position;
+        //base.im.rectTransform.position = position;
         //im.rectTransform. = dimension;
 
         // TODO mettre les dims 

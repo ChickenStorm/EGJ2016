@@ -9,8 +9,9 @@ public class Entity {
     public bool isStatique { get; set; }
     public Sprite image { get; set; }
     public Image im { get; set; }
+    public bool isActive { get; set; }
 
-    public Entity(Vector3 pos, Vector3 dim, Vector3 vit, bool isstat, Sprite s,Image impara)
+    public Entity(Vector3 pos, Vector3 dim, Vector3 vit, bool isstat, Sprite s,Image impara,bool isActiveP = true)
     {
         vitesse = vit;
         position = pos;
@@ -18,6 +19,9 @@ public class Entity {
         image = s;
         dimension = dim;
         im = impara;
+        isActive = isActiveP;
+
+
     }
     public Entity()
     {
@@ -30,10 +34,13 @@ public class Entity {
 
 
     virtual public void update(float dt, World w) {
+        
         im.rectTransform.position = position; //- new Vector3(+40,-40,0) ;
-        if (!isStatique) {
+        if (!isStatique)
+        {
             position += vitesse;
         }
+    
         // TODO update
 
 
