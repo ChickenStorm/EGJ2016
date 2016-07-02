@@ -18,3 +18,16 @@ Test/Assets/Resources/Thumbs.db
 Test/Assets/Resources/Thumbs.db.meta
 Test/Assets/Resources/*.png.meta
 Test/Assets/Resources/*.meta
+EGJ/.vs/EGJ/v14/.suo
+EGJ/Assets/*.cs.meta
+EGJ/Assets/*.prefab.meta
+EGJ/Assets/*.unity.meta
+EGJ/Assets/Resources/*.meta
+EGJ/Assets/Resources/AnimVirus/*.png.meta
+EGJ/Assets/Resources/AnimVirus/*.db.meta
+EGJ/Assets/Resources/*/Thumbs.db
+EGJ/Assets/Resources/*/*.db.meta
+EGJ/Assets/Resources/*/*.png.meta
+EGJ/Assets/*/Thumbs.db
+EGJ/Library/
+EGJ/Temp/
