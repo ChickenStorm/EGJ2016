@@ -30,7 +30,7 @@ public class Personnage : Entity
         toucheEnfoncerD = false;
         toucheEnfoncerA = false;
         toucheEnfoncerSpace = false;
-        vitesseMin = 10;
+        vitesseMin = 20;
         facteurVitesse = vitesseMin;
         timerCollision = 0;
         timerActive = false;
@@ -177,12 +177,16 @@ public class Personnage : Entity
     public void saut(Plateform platef)
     {
         float marge = 6.0f;
+        float xGauche = position.x - dimension.x * (im.rectTransform.pivot.x);
+        float xDroite = position.x + dimension.x * (1 - im.rectTransform.pivot.x);
+        float yBas = position.y - dimension.y * (im.rectTransform.pivot.y);
+        float yHaut = position.y + dimension.y * (1 - im.rectTransform.pivot.y);
         if ((position.y - 15 < platef.position.y + platef.dimension.y) && (position.y - 15 > platef.position.y) && !aDejaSaute 
             && (position.x + dimension.x -15 > platef.position.x) && (position.x +15 < platef.position.x + platef.dimension.x))//(position.x-marge < platef.position.x + platef.dimension.x) && (position.x + dimension.x + marge > platef.position.x))
         {
             GameObject.Find("Debug2").GetComponent<Text>().text = position + ";"+platef.position +";"+platef.dimension;
 
-            vitesse += new Vector3(0, 25, 0);
+            vitesse += new Vector3(0, 18, 0);
             aDejaSaute = true;
         }
     }
@@ -196,16 +200,25 @@ public class Personnage : Entity
     {
         if (!(position.x + dimension.x < platef.position.x - 30 || position.x > platef.position.x + platef.dimension.x + 30))
         {
-
             if (platef != null)
             {
-                float marge = 5;
+
                 Vector3 nPosition = position + deplacementCible;
+
+                float xGauche = nPosition.x - dimension.x * (im.rectTransform.pivot.x);
+                float xDroite = nPosition.x + dimension.x * (1-im.rectTransform.pivot.x);
+                float yBas = nPosition.y - dimension.y * (im.rectTransform.pivot.y);
+                float yHaut = nPosition.y + dimension.y * (1 - im.rectTransform.pivot.y);
+
+
+
+                float marge = 5;
                 //Debug.Log(nPosition.y + ", " + dimension.x + " : " + platef.position.x + " , " + platef.dimension.x);
-                if ((nPosition.x + dimension.x - marge > platef.position.x && nPosition.x + dimension.x - marge < platef.position.x + platef.dimension.x) || (nPosition.x + marge < platef.position.x + platef.dimension.x && nPosition.x + marge > platef.position.x))
+                if ((xDroite - marge > platef.position.x && xDroite - marge < platef.position.x + platef.dimension.x) || 
+                    (xGauche - marge < platef.position.x + platef.dimension.x && xDroite + marge > platef.position.x))
                 {
                     //Debug.Log(nPosition);
-                    if (position.y + marge < platef.position.y + platef.dimension.y && position.y + dimension.y - marge > platef.position.y)
+                    if (position.y + marge < platef.position.y + platef.dimension.y && position.y+dimension.y - marge > platef.position.y)
                     {
 
                          Debug.Log("ok");
@@ -224,7 +237,7 @@ public class Personnage : Entity
                         Debug.Log(facteurVitesse);
                     }
                 }
-                if ((nPosition.y + dimension.y - marge > platef.position.y && nPosition.y + dimension.y - marge < platef.position.y + platef.dimension.y) || (nPosition.y + marge < platef.position.y + platef.dimension.y && nPosition.y + marge > platef.position.y))
+                if ((yHaut - marge > platef.position.y && yHaut - marge < platef.position.y + platef.dimension.y) || (yBas + marge < platef.position.y + platef.dimension.y && yBas + marge > platef.position.y))
                 {
                     if (position.x + marge < platef.position.x + platef.dimension.x && position.x + dimension.x - marge > platef.position.x)
                     {
