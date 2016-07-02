@@ -142,7 +142,7 @@ public class main : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         //mainScene.rectTransform.position = w.getPlayer().position;
-        c1. transform.position = w.getPlayer().position ;
+        c1. transform.position = w.getPlayer().position +new Vector3(400,0,0) ;
         //c2.transform.position = new Vector3(0, -100, 0);
         BG.rectTransform.position = w.getPlayer().position/6;
         speed.text = "";

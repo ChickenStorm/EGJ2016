@@ -20,7 +20,7 @@ public class Biles : Entity
     {
         base.update(dt, w);
 
-        if (isActive && Mathf.Abs(w.getPlayer().position.x - this.position.x) < base.dimension.x+ w.getPlayer().dimension.x && Mathf.Abs(w.getPlayer().position.y - this.position.y) < base.dimension.y + w.getPlayer().dimension.y)
+        if (isActive && Mathf.Abs(w.getPlayer().position.x - this.position.x) < base.dimension.x+ w.getPlayer().dimension.x-10 && Mathf.Abs(w.getPlayer().position.y - this.position.y) < base.dimension.y + w.getPlayer().dimension.y-10)
         {
             Debug.Log("getBille");
             isActive = false;
@@ -61,7 +61,7 @@ public class Biles : Entity
                 {
                     // Debug.Log("ok");
                     deplacementCible.x = 0;
-                    vitesse = new Vector3(0, vitesse.y, vitesse.z);
+                    vitesse = new Vector3(-vitesse.x / 2, vitesse.y/2, vitesse.z);
                 }
             }
             if ((nPosition.y + dimension.y > platef.position.y && nPosition.y + dimension.y < platef.position.y + platef.dimension.y) || (nPosition.y < platef.position.y + platef.dimension.y && nPosition.y > platef.position.y))
@@ -69,7 +69,7 @@ public class Biles : Entity
                 if (position.x < platef.position.x + platef.dimension.x && position.x + dimension.x > platef.position.x)
                 {
                     deplacementCible.y = 0;
-                    vitesse = new Vector3(vitesse.x, 0, vitesse.z);
+                    vitesse = new Vector3(vitesse.x/2, -vitesse.y/2, vitesse.z);
                 }
             }
             //return false;

@@ -21,7 +21,12 @@ public class Virus : Entity
     private void dropBille(World w) {
         Image b = Object.Instantiate(w.billeModel);
         b.transform.SetParent(w.billeP.transform);
-        w.billes.Add(new Biles(position, new Vector3(0, 0, 0), new Vector3(10, 10, 0), Resources.Load<Sprite>("DSC02576"), b, 3, billeAnim));
+
+        System.Random hasard = new System.Random();
+        float h1 = hasard.Next(-10, 11);
+        float h2 = hasard.Next(-10, 11);
+
+        w.billes.Add(new Biles(position, new Vector3(h1, h2, 0), new Vector3(50, 50, 0), Resources.Load<Sprite>("DSC02576"), b, 3, billeAnim));
     }
 
 
