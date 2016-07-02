@@ -13,7 +13,7 @@ public class Personnage : Entity
 
     Vector3 deplacementCible;
 
-    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri,Image im, Animation anim) : base(pos, dim, vit, false, spri,im, anim)
+    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri, Image im, Animation anim) : base(pos, dim, vit, false, spri, im, anim)
     {
         toucheEnfoncerD = false;
         toucheEnfoncerA = false;
@@ -35,7 +35,8 @@ public class Personnage : Entity
         anim.update(dt);
         im.sprite = anim.image;
         //base.update(dt,w);
-        if (position.y < -1000) {
+        if (position.y < -1000)
+        {
             position = new Vector3(0, 500, 0);
         }
 
@@ -79,9 +80,10 @@ public class Personnage : Entity
             deplacementCible = new Vector3(-facteurVitesse, 0, 0);
         }
         vitesse -= new Vector3(0, 1, 0);
+        Debug.Log("ok");
         deplacementCible += vitesse;
 
-        aDejaSaute = false; 
+        aDejaSaute = false;
     }
 
     public void saut(Plateform platef)
@@ -102,21 +104,29 @@ public class Personnage : Entity
     {
         if (platef != null)
         {
+            float marge = 5;
             Vector3 nPosition = position + deplacementCible;
             //Debug.Log(nPosition.y + ", " + dimension.x + " : " + platef.position.x + " , " + platef.dimension.x);
-            if ((nPosition.x + dimension.x > platef.position.x && nPosition.x + dimension.x < platef.position.x + platef.dimension.x) || (nPosition.x < platef.position.x + platef.dimension.x && nPosition.x > platef.position.x))
+            if ((nPosition.x + dimension.x - marge > platef.position.x && nPosition.x + dimension.x - marge < platef.position.x + platef.dimension.x) || (nPosition.x + marge < platef.position.x + platef.dimension.x && nPosition.x + marge > platef.position.x))
             {
                 //Debug.Log(nPosition);
-                if (position.y < platef.position.y + platef.dimension.y && position.y + dimension.y > platef.position.y)
+                if (position.y + marge < platef.position.y + platef.dimension.y && position.y + dimension.y - marge > platef.position.y)
                 {
                     // Debug.Log("ok");
                     deplacementCible.x = 0;
                     vitesse = new Vector3(0, vitesse.y, vitesse.z);
+
+                    facteurVitesse -= 3;
+                    if(facteurVitesse <=5)
+                    {
+                        facteurVitesse = 5;
+                    }
+                    Debug.Log(facteurVitesse);
                 }
             }
-            if ((nPosition.y + dimension.y > platef.position.y && nPosition.y + dimension.y < platef.position.y + platef.dimension.y) || (nPosition.y < platef.position.y + platef.dimension.y && nPosition.y > platef.position.y))
+            if ((nPosition.y + dimension.y - marge > platef.position.y && nPosition.y + dimension.y - marge < platef.position.y + platef.dimension.y) || (nPosition.y + marge < platef.position.y + platef.dimension.y && nPosition.y + marge > platef.position.y))
             {
-                if (position.x < platef.position.x + platef.dimension.x && position.x + dimension.x > platef.position.x)
+                if (position.x + marge < platef.position.x + platef.dimension.x && position.x + dimension.x - marge > platef.position.x)
                 {
                     deplacementCible.y = 0;
                     vitesse = new Vector3(vitesse.x, 0, vitesse.z);
@@ -124,9 +134,10 @@ public class Personnage : Entity
             }
             //return false;
         }
-        else {
+        else
+        {
         }
     }
-    
-   
+
+
 }
