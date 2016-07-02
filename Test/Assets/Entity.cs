@@ -29,7 +29,7 @@ public class Entity {
     }
 
 
-    public void update(float dt) {
+    virtual public void update(float dt,World w) {
 
         position += vitesse;
         // TODO update
