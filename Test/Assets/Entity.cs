@@ -5,20 +5,20 @@ using System.Collections;
 public class Entity {
     protected Animation anim;
     public Vector3 position { get; set; }
-    public Vector3 dimension { get; set; }
+    public Vector3 dimension { get; set; } 
     public Vector3 vitesse { get; set; }
     public bool isStatique { get; set; }
     public Sprite image { get; set; }
     public Image im { get; set; }
     public bool isActive { get; set; }
-
+    //TODO enlevé dim
     public Entity(Vector3 pos, Vector3 dim, Vector3 vit, bool isstat, Sprite s,Image impara, Animation animP , bool isActiveP = true)
     {
         vitesse = vit;
         position = pos;
         isStatique = isstat;
         image = s;
-        dimension = dim;
+        dimension = (Vector3)im.rectTransform.rect.size; //
         im = impara;
         isActive = isActiveP;
         anim = animP;
