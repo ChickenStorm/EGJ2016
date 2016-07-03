@@ -16,6 +16,9 @@ public class main : MonoBehaviour {
     public Image listePlateformes;
     public Image virus;
 
+    public Image Fish;
+    public Image[] Fishs;
+
     public Image listePlateformes2;
     public Image listePlateformes3;
     public Image listePlateformesSchack;
@@ -62,7 +65,7 @@ public class main : MonoBehaviour {
     Animation platAnimGr = new Animation("PlatformGr", 0.05f, 1);
     Animation platAnimSch = new Animation("PlatformSchack", 0.05f, 1);
 
-
+    public float time =0;
 
     private Vector3 lastPosCam;
     private Vector3 lastDepCam;
@@ -103,6 +106,8 @@ public class main : MonoBehaviour {
         liste_plateformesShack = listePlateformesSchack.transform.GetComponentsInChildren<PlateformeScript>();
         liste_plateformesMvt = listePlateformesMvt.transform.GetComponentsInChildren<PlateformeScript>();
         ground = groundI.transform.GetComponentsInChildren<PlateformeScript>();
+
+        Fishs = Fish.transform.GetComponentsInChildren<Image>();
 
 
         joueur = new Personnage(new Vector3(imageJoueur.transform.position.x, imageJoueur.transform.position.y, 0), 
@@ -208,6 +213,10 @@ public class main : MonoBehaviour {
         if (w != null)
         {
             float dt = Time.deltaTime;
+            /*time += dt;
+            for (int i = 0; i < Fishs.Length; ++i) {
+                Fishs[i].rectTransform.Rotate(new Vector3(0, 0, time / 3));
+            }*/
 
             iconeVirusAn.sprite = AnimVirus.image;
 
