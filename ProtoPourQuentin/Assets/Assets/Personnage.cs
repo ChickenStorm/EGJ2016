@@ -8,7 +8,7 @@ public class Personnage : Entity
     public bool toucheEnfoncerA { get; set; }
     public bool toucheEnfoncerSpace { get; set; }
     public float facteurVitesse { get; set; }
-    public boo toucheEnfoncerR { get; set; }
+    public bool toucheEnfoncerR { get; set; }
 
     private AudioSource jumpSound;
     private AudioSource fallUnderMapSound;
@@ -136,6 +136,8 @@ public class Personnage : Entity
         }
 
         deplacer(dt);
+        foreach(Plateform p in w.platforms)
+            deplacementShaky(p);
         foreach (Plateform p in w.platforms)
             collision(p);
         validerDeplacement();
@@ -357,5 +359,36 @@ public class Personnage : Entity
         }
     }
 
+    public void deplacementShaky(Plateform platef)
+    {
+        if (!(position.x + dimension.x < platef.position.x - 30 || position.x > platef.position.x + platef.dimension.x + 30))
+        {
+            if (platef != null)
+            {
+
+                Vector3 nPosition = (position + deplacementCible);
+
+                float xGauche = nPosition.x - dimension.x * (0);
+                float xDroite = nPosition.x + dimension.x * (1 - 0);
+                float yBas = nPosition.y - dimension.y * (0);
+                float yHaut = nPosition.y + dimension.y * (1 - 0);
+                
+
+                float marge = 5;
+                //Debug.Log(nPosition.y + ", " + dimension.x + " : " + platef.position.x + " , " + platef.dimension.x);
+                
+                if ((yHaut - marge > platef.position.y && yHaut - marge < platef.position.y + platef.dimension.y) || (yBas + marge < platef.position.y + platef.dimension.y && yBas + marge > platef.position.y))
+                {
+                    if (position.x + marge < platef.position.x + platef.dimension.x && position.x + dimension.x - marge > platef.position.x)
+                    {
+
+                        deplacementCible += platef.deplacement;
+                        enSaut = false;
+                    }
+                }
+                //return false;
+            }
+        }
+    }
 
 }
