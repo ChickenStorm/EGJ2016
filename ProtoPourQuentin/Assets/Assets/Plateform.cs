@@ -37,7 +37,7 @@ public class Plateform : Entity{
             position = posInit + new Vector3(Mathf.Sin(timer / periodeX * Mathf.PI * 2f+ dephasageX) *amplitudeX, Mathf.Sin(timer / periodeY * Mathf.PI * 2f+dephasageY) * amplitudeY, 0);
             //w.getPlayer().position = new Vector3(w.getPlayer().vitesse.x,)
             //deplacement = (new Vector3(Mathf.Sin(timer / periodeX * Mathf.PI * 2f)*amplitudeX,Mathf.Sin(timer / periodeY * Mathf.PI * 2f+dephasage) * amplitudeY,0)- new Vector3(Mathf.Sin(timerPre / periodeX * Mathf.PI * 2f) * amplitudeX, Mathf.Sin(timerPre / periodeY * Mathf.PI * 2f + dephasage) * amplitudeY, 0))/2 ;
-            deplacement = (position - oldPos)/2;
+            deplacement = (position - oldPos);
         }
         base.update(dt, w);
 

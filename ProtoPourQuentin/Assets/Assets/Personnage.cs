@@ -47,7 +47,7 @@ public class Personnage : Entity
 
     private Animation AnimationStill = new Animation("joueurStill", 0.05f, 1);
     private Animation AnimationFast = new Animation("joueurFast", 0.05f, 5);
-    private Animation AnimationTransit = new Animation("joueurTransit", 0.05f, 1);
+    private Animation AnimationTransit = new Animation("joueurTransit", 0.05f, 11);
 
 
     Vector3 deplacementCible;
@@ -331,7 +331,7 @@ public class Personnage : Entity
         if (!enSaut)
         {
             jumpSound.PlayOneShot(jumpSound.clip, 0.8f);
-            vitesse = new Vector3(vitesse.x, vitesse.y + 40 * scale, vitesse.z);
+            vitesse = new Vector3(vitesse.x, vitesse.y + 30 * scale, vitesse.z);
             aDejaSaute = true;
             enSaut = true;
         }
@@ -422,6 +422,7 @@ public class Personnage : Entity
                         {
                             Vector3 ancienDeplacement = deplacementCible;
                             deplacementPlateforme = platef.deplacement;
+                            
                         }
                     }
                 }

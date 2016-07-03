@@ -83,7 +83,9 @@ public class main : MonoBehaviour {
 
     void Start() {
         //mainScene.gameObject.active = true;
-        
+
+        Debug.Log("b");
+
         mainGameIsRunning = false;
         isInMenu = true;
 
@@ -198,137 +200,146 @@ public class main : MonoBehaviour {
     }
 
 
-    
+
 
     // Update is called once per frame
-    void Update() {
-        float dt = Time.deltaTime;
-
-        iconeVirusAn.sprite = AnimVirus.image;
-
-        if (Mathf.Abs(w.getPlayer().position.x + 400 - w.virus.position.x) > Screen.width / 2f || Mathf.Abs(w.getPlayer().position.y  - w.virus.position.y) > Screen.height/2f )
+    void Update()
+    {
+        if (w != null)
         {
-            iconeVirus.gameObject.SetActive(true);
-            float positonX;
-            float positonY;
-            Vector3 diffPos =- (w.getPlayer().position +new Vector3(400,0,0) - w.virus.position);
-          //  Debug.Log(diffPos);
-            if (diffPos.x < 0)
-            {
-                positonX = Mathf.Max(diffPos.x, -Screen.width / 3.4f);
-            }
-            else {
-                positonX = Mathf.Min(diffPos.x, Screen.width / 3.4f);
-            }
+            float dt = Time.deltaTime;
 
-            if (diffPos.y < 0)
+            iconeVirusAn.sprite = AnimVirus.image;
+
+            if (Mathf.Abs(w.getPlayer().position.x + 400 - w.virus.position.x) > Screen.width / 2f || Mathf.Abs(w.getPlayer().position.y - w.virus.position.y) > Screen.height / 2f)
             {
-                positonY = Mathf.Max(diffPos.y, -Screen.height / 2.2f);
+                iconeVirus.gameObject.SetActive(true);
+                float positonX;
+                float positonY;
+                Vector3 diffPos = -(w.getPlayer().position + new Vector3(400, 0, 0) - w.virus.position);
+                //  Debug.Log(diffPos);
+                if (diffPos.x < 0)
+                {
+                    positonX = Mathf.Max(diffPos.x, -Screen.width / 3.4f);
+                }
+                else
+                {
+                    positonX = Mathf.Min(diffPos.x, Screen.width / 3.4f);
+                }
+
+                if (diffPos.y < 0)
+                {
+                    positonY = Mathf.Max(diffPos.y, -Screen.height / 2.2f);
+                }
+                else
+                {
+                    positonY = Mathf.Min(diffPos.y, Screen.height / 2.2f);
+                }
+
+                iconeVirus.rectTransform.position = new Vector3(positonX + Screen.width / 2f, positonY + Screen.height / 2f, 0);
+
             }
             else
             {
-                positonY = Mathf.Min(diffPos.y, Screen.height / 2.2f);
+                iconeVirus.gameObject.SetActive(false);
             }
 
-            iconeVirus.rectTransform.position = new Vector3(positonX+ Screen.width/2f, positonY + Screen.height / 2f,0);
+            timerT.text = Mathf.Floor(w.timer) + " / " + w.maxTime;
+            //mainScene.rectTransform.position = w.getPlayer().position;
 
-        }
-        else {
-            iconeVirus.gameObject.SetActive(false);
-        }
+            float cible = w.getPlayer().position.y + 200.0f * scale;
+            float direction = cible - c1.transform.position.y;
 
-        timerT.text = Mathf.Floor( w.timer) + " / " + w.maxTime;
-        //mainScene.rectTransform.position = w.getPlayer().position;
-
-        float cible = w.getPlayer().position.y+200.0f*scale;
-        float direction = cible - c1.transform.position.y;
-
-        Vector3 diffPosCamPlayer = w.getPlayer().position + new Vector3(400, 0, 0) * scale  - lastPosCam;
+            Vector3 diffPosCamPlayer = w.getPlayer().position + new Vector3(400, 0, 0) * scale - lastPosCam;
 
 
-        Vector3 diffPOsDep = diffPosCamPlayer * dt * 5;
-        Vector3 maxDiff = lastDepCam * dt * 6;
+            Vector3 diffPOsDep = diffPosCamPlayer * dt * 5;
+            Vector3 maxDiff = lastDepCam * dt * 6;
 
-        if (diffPOsDep.magnitude > maxDiff.magnitude) {
-            lastPosCam += maxDiff;
-        }
-        else {
-            lastPosCam += diffPOsDep;
-        }
-
-
-        c1.transform.position = new Vector3(w.getPlayer().position.x, lastPosCam.y, 0) + new Vector3(400, 0, 0) * scale;
-        //c1.transform.position = new Vector3(w.getPlayer().position.x, w.getPlayer().position.y, 0) + new Vector3(400, 0, 0) * scale;
-
-        //c1.transform.position = lastPosCam;
-        BG.rectTransform.position = new Vector3(c1.transform.position.x, c1.transform.position.y , 0) / 5;
-
-        lastDepCam = diffPosCamPlayer;
-
-        //Debug.Log(direction+"");
-        //c1. transform.position = new Vector3(w.getPlayer().position.x, w.getPlayer().position.y/3.0f,0) +new Vector3(400,200,0) * scale;
-        /*
-        float vitesseTracking = 10.0f;
-        if (Mathf.Abs(direction) > vitesseTracking)
-        {
-            c1.transform.position = new Vector3(w.getPlayer().position.x, c1.transform.position.y + direction / Mathf.Abs(direction) * vitesseTracking, 0) + new Vector3(400, 0, 0) * scale;
-        }
-        else
-        {
-            c1.transform.position = new Vector3(w.getPlayer().position.x, w.getPlayer().position.y, 0) + new Vector3(400, 200, 0) * scale;
-        }*/
-        //c2.transform.position = new Vector3(0, -100, 0);
-
-        speed.text = "";
-        for (int i = 0; i < w.getPlayer().facteurVitesse/5; ++i)
-        {
-            speed.text += "|";
-        }
-
-        if (mainGameIsRunning)
-        {
-            w.update(dt);
-
-            if (w.hasWin)
+            if (diffPOsDep.magnitude > maxDiff.magnitude)
             {
-                SceneManager.LoadScene("win");
-                //youWinText.rectTransform.position = new Vector3(200, 200, 0);
+                lastPosCam += maxDiff;
+            }
+            else
+            {
+                lastPosCam += diffPOsDep;
             }
 
 
-            if (w.hasLoos) {
-                SceneManager.LoadScene("loos");
+            c1.transform.position = new Vector3(w.getPlayer().position.x, lastPosCam.y, 0) + new Vector3(400, 0, 0) * scale;
+            //c1.transform.position = new Vector3(w.getPlayer().position.x, w.getPlayer().position.y, 0) + new Vector3(400, 0, 0) * scale;
+
+            //c1.transform.position = lastPosCam;
+            BG.rectTransform.position = new Vector3(c1.transform.position.x, c1.transform.position.y, 0) / 5;
+
+            lastDepCam = diffPosCamPlayer;
+
+            //Debug.Log(direction+"");
+            //c1. transform.position = new Vector3(w.getPlayer().position.x, w.getPlayer().position.y/3.0f,0) +new Vector3(400,200,0) * scale;
+            /*
+            float vitesseTracking = 10.0f;
+            if (Mathf.Abs(direction) > vitesseTracking)
+            {
+                c1.transform.position = new Vector3(w.getPlayer().position.x, c1.transform.position.y + direction / Mathf.Abs(direction) * vitesseTracking, 0) + new Vector3(400, 0, 0) * scale;
             }
+            else
+            {
+                c1.transform.position = new Vector3(w.getPlayer().position.x, w.getPlayer().position.y, 0) + new Vector3(400, 200, 0) * scale;
+            }*/
+            //c2.transform.position = new Vector3(0, -100, 0);
+
+            speed.text = "";
+            for (int i = 0; i < w.getPlayer().facteurVitesse / 5; ++i)
+            {
+                speed.text += "|";
+            }
+
+            if (mainGameIsRunning)
+            {
+                w.update(dt);
+
+                if (w.hasWin)
+                {
+                    SceneManager.LoadScene("win");
+                    //youWinText.rectTransform.position = new Vector3(200, 200, 0);
+                }
+
+
+                if (w.hasLoos)
+                {
+                    SceneManager.LoadScene("loos");
+                }
+            }
+
+
+            /*
+
+            //deplacer joueur
+            imageJoueur.rectTransform.position = joueur.position;
+
+            if (Input.GetKeyDown(KeyCode.D))
+                joueur.toucheEnfoncerD = true;
+            if (Input.GetKeyUp(KeyCode.D))
+                joueur.toucheEnfoncerD = false;
+            if (Input.GetKeyDown(KeyCode.A))
+                joueur.toucheEnfoncerA = true;
+            if (Input.GetKeyUp(KeyCode.A))
+                joueur.toucheEnfoncerA = false;
+            if (Input.GetKeyDown(KeyCode.W))
+                joueur.toucheEnfoncerD = true;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                foreach (PlateformeScript p in liste_plateformes)
+                    joueur.saut(p.plateform);
+            }
+
+            joueur.deplacer();
+            foreach(PlateformeScript p in liste_plateformes)
+                joueur.collision(p.plateform);
+            joueur.validerDeplacement();
+            Debug.text = joueur.position.x + ","+ joueur.position.y;
+
+        */
         }
-
-
-        /*
-
-        //deplacer joueur
-        imageJoueur.rectTransform.position = joueur.position;
-        
-        if (Input.GetKeyDown(KeyCode.D))
-            joueur.toucheEnfoncerD = true;
-        if (Input.GetKeyUp(KeyCode.D))
-            joueur.toucheEnfoncerD = false;
-        if (Input.GetKeyDown(KeyCode.A))
-            joueur.toucheEnfoncerA = true;
-        if (Input.GetKeyUp(KeyCode.A))
-            joueur.toucheEnfoncerA = false;
-        if (Input.GetKeyDown(KeyCode.W))
-            joueur.toucheEnfoncerD = true;
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            foreach (PlateformeScript p in liste_plateformes)
-                joueur.saut(p.plateform);
-        }
-
-        joueur.deplacer();
-        foreach(PlateformeScript p in liste_plateformes)
-            joueur.collision(p.plateform);
-        joueur.validerDeplacement();
-        Debug.text = joueur.position.x + ","+ joueur.position.y;
-
-    */
     }
 }
