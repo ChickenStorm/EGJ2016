@@ -9,7 +9,7 @@ public class PlateformeScript : MonoBehaviour {
     Animation platAnim = new Animation("Platform", 0.05f, 1);
     public float dephasageX;
     public float amplitudeX;
-
+    public float frecX;
     // Use this for initialization
     void Start () {
         float x = image.rectTransform.position.x;
@@ -17,7 +17,7 @@ public class PlateformeScript : MonoBehaviour {
         float largeur = image.rectTransform.rect.width;
         float longueur = image.rectTransform.rect.height;
 
-        plateform = new Plateform(new Vector3(x, y, 0), new Vector3(largeur, longueur, 0),image, platAnim, dephasageX, amplitudeX);
+        plateform = new Plateform(new Vector3(x, y, 0), new Vector3(largeur, longueur, 0),image, platAnim, dephasageX, amplitudeX, frecX);
         
         Debug.Log(plateform.dimension.x + ", " + plateform.dimension.y);
 	}

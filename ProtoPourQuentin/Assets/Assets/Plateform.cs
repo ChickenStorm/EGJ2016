@@ -13,18 +13,19 @@ public class Plateform : Entity{
     public float amplitudeY = 0f; 
     private const float dephasageY = 0f; // en radiant
     public float dephasageX { get; set; } // en radiant
-    public float periodeX = 0.1f; // en sec
+    public float periodeX; // en sec
     private const float periodeY = 1f; // en sec
 
     public Vector3 deplacement{get;private set;}
 
-    public Plateform(Vector3 pos, Vector3 dim,Image im,Animation anim,float dephasageXP=0, float ampx = 10f, bool isSchakyP = false) : base (pos, dim, new Vector3(), true, new Sprite(),im,anim)
+    public Plateform(Vector3 pos, Vector3 dim,Image im,Animation anim,float dephasageXP=0, float ampx = 10f, float frecX = 1f, bool isSchakyP = false) : base (pos, dim, new Vector3(), true, new Sprite(),im,anim)
     {
         isSchaky = isSchakyP;
         posInit = pos;
         timer = 0;
         dephasageX = dephasageXP;
         amplitudeX = ampx;
+        periodeX = frecX;
 
     }
     public override void update(float dt, World w)

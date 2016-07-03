@@ -157,7 +157,7 @@ public class main : MonoBehaviour {
             liste_plateformesMvt[i].plateform.anim = platAnimSch;
             liste_plateformesMvt[i].plateform.isSchaky = true;
             //liste_plateformesMvt[i].plateform.amplitudeY = 100;
-            liste_plateformesMvt[i].plateform.periodeX = 3;
+            //liste_plateformesMvt[i].plateform.periodeX = 3;
             ptemp.Add(liste_plateformesMvt[i].plateform);
         }
 
