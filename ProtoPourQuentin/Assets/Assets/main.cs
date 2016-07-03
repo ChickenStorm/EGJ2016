@@ -118,7 +118,7 @@ public class main : MonoBehaviour {
             );
 
         virusOb = new Virus(new Vector3(virus.transform.position.x, virus.transform.position.y, 0), 
-            new Vector3(13*scale, 0*scale, 0), new Vector3(virus.rectTransform.rect.width, virus.rectTransform.rect.height, 0), 
+            new Vector3(12*scale, 0*scale, 0), new Vector3(virus.rectTransform.rect.width, virus.rectTransform.rect.height, 0), 
             Resources.Load<Sprite>("DSC02576"), virus, 0.8f, bille, AnimVirus,billeAnim, pickupSound);
     
         /*Image b = Instantiate(bille);
