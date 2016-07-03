@@ -36,3 +36,6 @@ ProtoPourQuentin/Temp/UnityTempFile-0728179d7f3b42f47b7de95799d9ab62
 ProtoPourQuentin/Temp/UnityLockfile
 ProtoPourQuentin/Temp/UnityVS_obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 ProtoPourQuentin/Temp/
+ProtoPourQuentin/Assets/Assets/SoundFX/*.wav.meta
+ProtoPourQuentin/Assets/Assets/resources/*/*.png.meta
+ProtoPourQuentin/Assets/Assets/SoundFX.meta

@@ -8,6 +8,16 @@ public class Personnage : Entity
     public bool toucheEnfoncerA { get; set; }
     public bool toucheEnfoncerSpace { get; set; }
     public float facteurVitesse { get; set; }
+
+
+    private AudioSource jumpSound;
+    private AudioSource fallUnderMapSound;
+    private AudioSource hitWallSound;
+    private AudioSource boostSound;
+
+
+    public Vector3 respawnPos { get; set; }
+
     float vitesseMin;
     float timerCollision;
     bool aDejaSaute;
@@ -24,6 +34,10 @@ public class Personnage : Entity
     float timeFaste1;
     float timeFaste2;
 
+    private bool hasPlayAccelerationSound=false;
+
+    private float timerFastSound=0;
+    private const float MaxtimerFastSound = 2.5f;
 
     private Animation AnimationStill = new Animation("joueurStill", 0.05f, 1);
     private Animation AnimationFast = new Animation("joueurFast", 0.05f, 5);
@@ -32,8 +46,15 @@ public class Personnage : Entity
 
     Vector3 deplacementCible;
 
-    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri, Image im, Animation anim,Image playerFastP, Image playerTrP) : base(pos, dim, vit, false, spri, im, anim)
+    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri, Image im, Animation anim,Image playerFastP, 
+        Image playerTrP, Vector3 respawnPosP, AudioSource jumpSoundP, AudioSource fallUnderMapSoundP, AudioSource hitWallSoundP,
+        AudioSource boostSoundP)
+        :base(pos, dim, vit, false, spri, im, anim)
     {
+        jumpSound= jumpSoundP;
+        fallUnderMapSound= fallUnderMapSoundP;
+        hitWallSound= hitWallSoundP;
+        boostSound= boostSoundP;
         voidAnim.update(1);
         toucheEnfoncerD = false;
         toucheEnfoncerA = false;
@@ -47,6 +68,7 @@ public class Personnage : Entity
         enSaut = false;
         playerFast = playerFastP;
         playerTr = playerTrP;
+        respawnPos = respawnPosP;
     }
 
     /*public Personnage(Image im) : this(new Vector3(), new Vector3(), new Vector3(), new Sprite(),im)
@@ -54,18 +76,37 @@ public class Personnage : Entity
 
     }*/
 
+    private void respawn(World w) {
+        position = respawnPos+new Vector3(0,1000,0);
+        ++numberOfDeath;
+        w.virus.setToInitialPosWithOfSet(numberOfDeath, this);
+        facteurVitesse = vitesseMin;
+        fallUnderMapSound.PlayOneShot(fallUnderMapSound.clip, 0.8f);
+    }
+
+    public void playHitWall() {
+        hitWallSound.PlayOneShot(hitWallSound.clip, 0.8f);
+    }
 
     public override void update(float dt, World w)
     {
-
+        if (hasPlayAccelerationSound) {
+            timerFastSound += dt;
+            if (timerFastSound >= MaxtimerFastSound) {
+                hasPlayAccelerationSound = false;
+                timerFastSound = 0;
+            }
+        }
         //base.update(dt,w);
         if (position.y < -1000)
         {
-            position = new Vector3(0, 1300, 0);
-            ++numberOfDeath;
 
-            w.virus.position = new Vector3(200+300* numberOfDeath, 1000, 0);
-            facteurVitesse = vitesseMin;
+            /*position = new Vector3(0, 1300, 0);
+            ++numberOfDeath;
+            w.virus.setToInitialPosWithOfSet(numberOfDeath,this);
+            //w.virus.position = new Vector3(200+300* numberOfDeath, 1000, 0);
+            facteurVitesse = vitesseMin;*/
+            respawn(w);
         }
 
         //deplacer joueur
@@ -131,6 +172,7 @@ public class Personnage : Entity
 
             if (timeFaste1 < 0.5)
             {
+                //playAccelerationSound = false;
                 im.gameObject.SetActive(true);
                 playerFast.gameObject.SetActive(false);
                 playerTr.gameObject.SetActive(false);
@@ -139,9 +181,13 @@ public class Personnage : Entity
                 im.sprite = anim.image;
                 AnimationTransit.timer = 0;
             }
-            else if (timeFaste2 < 0.1)
+            else if (timeFaste2 < 0.5)
             {
-
+                if (! hasPlayAccelerationSound)
+                {
+                    hasPlayAccelerationSound = true;
+                    boostSound.PlayOneShot(boostSound.clip, 0.2f);
+                }
                 im.gameObject.SetActive(false);
                 playerFast.gameObject.SetActive(false);
                 playerTr.gameObject.SetActive(true);
@@ -152,6 +198,7 @@ public class Personnage : Entity
             }
             else
             {
+                //playAccelerationSound = false;
                 //AnimationTransit.timer = 0;
                 //im.rectTransform.anchoredPosition = new Vector2(0.01f, 0);
                 //im.transform.Translate(new Vector3(-150, 0, 0));
@@ -232,7 +279,7 @@ public class Personnage : Entity
         //{
         if (!enSaut)
         {
-
+            jumpSound.PlayOneShot(jumpSound.clip, 0.8f);
             vitesse = new Vector3(vitesse.x, 30 * scale, vitesse.z);
             aDejaSaute = true;
             enSaut = true;
@@ -276,6 +323,7 @@ public class Personnage : Entity
                         {
                             facteurVitesse -= 3;
                             timerActive = true;
+                            playHitWall();
                         }
                         if (facteurVitesse <= vitesseMin)
                         {

@@ -12,10 +12,20 @@ public class Virus : Entity
     private Image bille;
     private float internalTime;
     private Animation billeAnim;
-    public Virus(Vector3 pos, Vector3 vitesse, Vector3 dimension, Sprite s,Image image,float dropTimeP, Image billeP, Animation anim, Animation animB) : base(pos, dimension, vitesse, false, s,image,anim) {
+    private Vector3 intialPos;
+    private AudioSource pickUpAudio;
+
+    public void setToInitialPosWithOfSet(int death,Personnage p) {
+        position = new Vector3(p.position.x + +death * 300 + 200, intialPos.y , 0 );
+    }
+
+    public Virus(Vector3 pos, Vector3 vitesse, Vector3 dimension, Sprite s,Image image,float dropTimeP, Image billeP, Animation anim, Animation animB,AudioSource pickUpAudioP) : base(pos, dimension, vitesse, false, s,image,anim) {
         dropTime = dropTimeP;
         bille = billeP;
         billeAnim = animB;
+        intialPos = pos;
+        pickUpAudio = pickUpAudioP;
+
     }
 
     private void dropBille(World w) {
@@ -26,7 +36,7 @@ public class Virus : Entity
         float h1 = hasard.Next(-10, 11);
         float h2 = hasard.Next(-10, 11);
 
-        w.billes.Add(new Biles(position, new Vector3(h1, h2, 0), new Vector3(50, 50, 0), Resources.Load<Sprite>("DSC02576"), b, 6, billeAnim));
+        w.billes.Add(new Biles(position, new Vector3(h1, h2, 0), new Vector3(50, 50, 0), Resources.Load<Sprite>("DSC02576"), b, 6, billeAnim, pickUpAudio));
     }
 
 
