@@ -16,7 +16,7 @@ public class World
     public Personnage getPlayer()  { return player; }
 
     public float timer=0;
-    public float maxTime = 3 *60;
+    public float maxTime = 3*60;
 
     public void update(float dt) { // input en entré
         
