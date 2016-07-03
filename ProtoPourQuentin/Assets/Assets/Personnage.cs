@@ -10,7 +10,7 @@ public class Personnage : Entity
     public float facteurVitesse { get; set; }
     public bool toucheEnfoncerR { get; set; }
 
-    private float timerResp =0;
+    private float timerResp = 0;
     private float MaxtimerResp = 3;
 
     private bool hasRespawn = false;
@@ -40,9 +40,9 @@ public class Personnage : Entity
     float timeFaste1;
     float timeFaste2;
 
-    private bool hasPlayAccelerationSound=false;
+    private bool hasPlayAccelerationSound = false;
 
-    private float timerFastSound=0;
+    private float timerFastSound = 0;
     private const float MaxtimerFastSound = 2.5f;
 
     private Animation AnimationStill = new Animation("joueurStill", 0.05f, 1);
@@ -51,22 +51,23 @@ public class Personnage : Entity
 
 
     Vector3 deplacementCible;
+    Vector3 deplacementPlateforme; 
 
-    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri, Image im, Animation anim,Image playerFastP, 
+    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri, Image im, Animation anim, Image playerFastP,
         Image playerTrP, Vector3 respawnPosP, AudioSource jumpSoundP, AudioSource fallUnderMapSoundP, AudioSource hitWallSoundP,
         AudioSource boostSoundP)
-        :base(pos, dim, vit, false, spri, im, anim)
+        : base(pos, dim, vit, false, spri, im, anim)
     {
-        jumpSound= jumpSoundP;
-        fallUnderMapSound= fallUnderMapSoundP;
-        hitWallSound= hitWallSoundP;
-        boostSound= boostSoundP;
+        jumpSound = jumpSoundP;
+        fallUnderMapSound = fallUnderMapSoundP;
+        hitWallSound = hitWallSoundP;
+        boostSound = boostSoundP;
         voidAnim.update(1);
         toucheEnfoncerD = false;
         toucheEnfoncerA = false;
         toucheEnfoncerSpace = false;
         vitesseMin = 24;
-        dimensionInitiale = dim*scale;
+        dimensionInitiale = dim * scale;
         facteurVitesse = vitesseMin;
         timerCollision = 0;
         timerActive = false;
@@ -82,23 +83,27 @@ public class Personnage : Entity
 
     }*/
 
-    private void respawn(World w) {
-        position = respawnPos+new Vector3(0,100,0);
+    private void respawn(World w)
+    {
+        position = respawnPos + new Vector3(0, 100, 0);
         ++numberOfDeath;
         w.virus.setToInitialPosWithOfSet(numberOfDeath, this);
         facteurVitesse = vitesseMin;
         fallUnderMapSound.PlayOneShot(fallUnderMapSound.clip, 0.8f);
     }
 
-    public void playHitWall() {
+    public void playHitWall()
+    {
         hitWallSound.PlayOneShot(hitWallSound.clip, 0.8f);
     }
 
     public override void update(float dt, World w)
     {
-        if (hasPlayAccelerationSound) {
+        if (hasPlayAccelerationSound)
+        {
             timerFastSound += dt;
-            if (timerFastSound >= MaxtimerFastSound) {
+            if (timerFastSound >= MaxtimerFastSound)
+            {
                 hasPlayAccelerationSound = false;
                 timerFastSound = 0;
             }
@@ -127,10 +132,10 @@ public class Personnage : Entity
         //deplacer joueur
         playerFast.rectTransform.position = position + (new Vector3(dimension.x * im.rectTransform.pivot.x, dimension.y * im.rectTransform.pivot.y, 0));
         playerTr.rectTransform.position = position + (new Vector3(dimension.x * im.rectTransform.pivot.x, dimension.y * im.rectTransform.pivot.y, 0));
-            
-        im.rectTransform.position = position+ (new Vector3(dimension.x*im.rectTransform.pivot.x, dimension.y* im.rectTransform.pivot.y,0));
 
-        
+        im.rectTransform.position = position + (new Vector3(dimension.x * im.rectTransform.pivot.x, dimension.y * im.rectTransform.pivot.y, 0));
+
+
 
         if (Input.GetKeyDown(KeyCode.D))
             toucheEnfoncerD = true;
@@ -150,17 +155,26 @@ public class Personnage : Entity
                 saut(p);
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && ! hasRespawn) {
+        if(vitesse.y > 0)
+        {
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space))
+            {
+            vitesse = new Vector3(vitesse.x, 0, vitesse.z);
+        }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && !hasRespawn)
+        {
             hasRespawn = true;
             respawn(w);
         }
-        if (Input.GetKeyDown(KeyCode.Q) )
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             facteurVitesse += 2;
         }
 
         deplacer(dt);
-        foreach(Plateform p in w.platforms)
+        foreach (Plateform p in w.platforms)
             deplacementShaky(p);
         foreach (Plateform p in w.platforms)
             collision(p);
@@ -215,7 +229,7 @@ public class Personnage : Entity
             }
             else if (timeFaste2 < 0.5)
             {
-                if (! hasPlayAccelerationSound)
+                if (!hasPlayAccelerationSound)
                 {
                     hasPlayAccelerationSound = true;
                     boostSound.PlayOneShot(boostSound.clip, 0.2f);
@@ -243,7 +257,7 @@ public class Personnage : Entity
                 AnimationFast.update(dt);
                 playerFast.sprite = AnimationFast.image;
             }
-        }   
+        }
         else
         {
             //AnimationStill.hasUpdate = false;
@@ -259,8 +273,9 @@ public class Personnage : Entity
             timeFaste1 = 0;
             timeFaste2 = 0;
         }
-        if (deplacementCible.x < 0) {
-            im.transform.localScale = new Vector3 (-1,1,1);
+        if (deplacementCible.x < 0)
+        {
+            im.transform.localScale = new Vector3(-1, 1, 1);
             playerFast.transform.localScale = new Vector3(-1, 1, 1);
             playerTr.transform.localScale = new Vector3(-1, 1, 1);
         }
@@ -279,18 +294,18 @@ public class Personnage : Entity
         deplacementCible = new Vector3(deplacementCible.x, 0, deplacementCible.z);
         if (toucheEnfoncerD)
         {
-            deplacementCible = new Vector3(facteurVitesse * 40 * dt, 0, 0)*scale;
-            if (vitesse.x < 10 && vitesse.x>0)
+            deplacementCible = new Vector3(facteurVitesse * 40 * dt, 0, 0) * scale;
+            if (vitesse.x < 10 && vitesse.x > 0)
                 vitesse = new Vector3(vitesse.x + 1 * scale, vitesse.y, vitesse.z);
         }
         if (toucheEnfoncerA)
         {
 
             deplacementCible = new Vector3(-facteurVitesse * 40 * dt, 0, 0) * scale;
-            if (vitesse.x > -10 && vitesse.x<0)
+            if (vitesse.x > -10 && vitesse.x < 0)
                 vitesse = new Vector3(vitesse.x - 1 * scale, vitesse.y, vitesse.z);
         }
-        vitesse -= new Vector3(0,4 * 30 * dt * scale, 0);
+        vitesse -= new Vector3(0, 4 * 30 * dt * scale, 0);//gravite
         vitesse = new Vector3(vitesse.x * 0.6f, vitesse.y, vitesse.z);
         deplacementCible += vitesse;
         deplacementCible = new Vector3(deplacementCible.x * 0.6f, deplacementCible.y, deplacementCible.z);
@@ -305,7 +320,7 @@ public class Personnage : Entity
 
     public void saut(Plateform platef)
     {
-        float marge = 6.0f;
+        float marge = 6.0f * scale;
         float xGauche = position.x - dimension.x * (im.rectTransform.pivot.x);
         float xDroite = position.x + dimension.x * (1 - im.rectTransform.pivot.x);
         float yBas = position.y - dimension.y * (im.rectTransform.pivot.y);
@@ -316,7 +331,7 @@ public class Personnage : Entity
         if (!enSaut)
         {
             jumpSound.PlayOneShot(jumpSound.clip, 0.8f);
-            vitesse = new Vector3(vitesse.x, 30 * scale, vitesse.z);
+            vitesse = new Vector3(vitesse.x, vitesse.y + 40 * scale, vitesse.z);
             aDejaSaute = true;
             enSaut = true;
         }
@@ -325,7 +340,8 @@ public class Personnage : Entity
 
     public void validerDeplacement()
     {
-        position += deplacementCible;
+        position += deplacementCible+deplacementPlateforme;
+        Debug.Log("Perso3 : " + (deplacementCible));
     }
 
     public void collision(Plateform platef)
@@ -334,16 +350,15 @@ public class Personnage : Entity
         {
             if (platef != null)
             {
-
                 Vector3 nPosition = (position + deplacementCible);
 
                 float xGauche = nPosition.x - dimension.x * (0);
                 float xDroite = nPosition.x + dimension.x * (1 - 0);
                 float yBas = nPosition.y - dimension.y * (0);
                 float yHaut = nPosition.y + dimension.y * (1 - 0);
-                
 
-                float marge = 5;
+
+                float marge = 5*scale;
                 //Debug.Log(nPosition.y + ", " + dimension.x + " : " + platef.position.x + " , " + platef.dimension.x);
                 if ((xDroite - marge > platef.position.x && xDroite - marge < platef.position.x + platef.dimension.x) ||
                     (xGauche + marge < platef.position.x + platef.dimension.x && xGauche + marge > platef.position.x))
@@ -351,7 +366,6 @@ public class Personnage : Entity
                     //Debug.Log(nPosition);
                     if (position.y + marge < platef.position.y + platef.dimension.y && position.y + dimension.y - marge > platef.position.y)
                     {
-                        
                         deplacementCible.x = 0;
                         vitesse = new Vector3(0, vitesse.y, vitesse.z);
 
@@ -371,8 +385,6 @@ public class Personnage : Entity
                 {
                     if (position.x + marge < platef.position.x + platef.dimension.x && position.x + dimension.x - marge > platef.position.x)
                     {
-
-                        
                         deplacementCible.y = 0;
                         vitesse = new Vector3(vitesse.x, 0, vitesse.z);
                         enSaut = false;
@@ -385,6 +397,7 @@ public class Personnage : Entity
 
     public void deplacementShaky(Plateform platef)
     {
+        deplacementPlateforme = new Vector3();
         if (!(position.x + dimension.x < platef.position.x - 30 || position.x > platef.position.x + platef.dimension.x + 30))
         {
             if (platef != null)
@@ -396,18 +409,20 @@ public class Personnage : Entity
                 float xDroite = nPosition.x + dimension.x * (1 - 0);
                 float yBas = nPosition.y - dimension.y * (0);
                 float yHaut = nPosition.y + dimension.y * (1 - 0);
-                
 
-                float marge = 5;
+
+                float marge = 5 * scale;
                 //Debug.Log(nPosition.y + ", " + dimension.x + " : " + platef.position.x + " , " + platef.dimension.x);
-                
+
                 if ((yHaut - marge > platef.position.y && yHaut - marge < platef.position.y + platef.dimension.y) || (yBas + marge < platef.position.y + platef.dimension.y && yBas + marge > platef.position.y))
                 {
                     if (position.x + marge < platef.position.x + platef.dimension.x && position.x + dimension.x - marge > platef.position.x)
                     {
-
-                        deplacementCible += platef.deplacement;
-                        enSaut = false;
+                        //if (platef.isSchaky)
+                        {
+                            Vector3 ancienDeplacement = deplacementCible;
+                            deplacementPlateforme = platef.deplacement;
+                        }
                     }
                 }
                 //return false;
