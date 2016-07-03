@@ -39,6 +39,7 @@ public class Personnage : Entity
 
     float timeFaste1;
     float timeFaste2;
+    float timerAcceleration;
 
     private bool hasPlayAccelerationSound = false;
 
@@ -81,6 +82,8 @@ public class Personnage : Entity
         playerTr = playerTrP;
         respawnPos = respawnPosP;
         deplacementPlateforme = new Vector3();
+
+        timerAcceleration = 0;
     }
 
     /*public Personnage(Image im) : this(new Vector3(), new Vector3(), new Vector3(), new Sprite(),im)
@@ -143,15 +146,27 @@ public class Personnage : Entity
 
 
         if (Input.GetKeyDown(KeyCode.C))
+        {
             toucheEnfoncerD = true;
+            timerAcceleration = 0;
+        }
         /*if (Input.GetKeyDown(KeyCode.R))
             toucheEnfoncerR = true;*/
         if (Input.GetKeyUp(KeyCode.C))
+        {
             toucheEnfoncerD = false;
+            timerAcceleration = 0;
+        }
         if (Input.GetKeyDown(KeyCode.Y))
+        {
             toucheEnfoncerA = true;
+            timerAcceleration = 0;
+        }
         if (Input.GetKeyUp(KeyCode.Y))
+        {
             toucheEnfoncerA = false;
+            timerAcceleration = 0;
+        }
         /*if (Input.GetKeyUp(KeyCode.R))
             toucheEnfoncerR = false;*/
         if (Input.GetKeyDown(KeyCode.X))
@@ -303,6 +318,7 @@ public class Personnage : Entity
             deplacementCible = new Vector3(facteurVitesse * 40 * dt, 0, 0) * scale;
             if (vitesse.x < 10 && vitesse.x > 0)
                 vitesse = new Vector3(vitesse.x + 1 * scale, vitesse.y, vitesse.z);
+            timerAcceleration += dt;
         }
         if (toucheEnfoncerA)
         {
@@ -310,6 +326,7 @@ public class Personnage : Entity
             deplacementCible = new Vector3(-facteurVitesse * 40 * dt, 0, 0) * scale;
             if (vitesse.x > -10 && vitesse.x < 0)
                 vitesse = new Vector3(vitesse.x - 1 * scale, vitesse.y, vitesse.z);
+            timerAcceleration += dt;
         }
         vitesse -= new Vector3(0, 4 * 30 * dt * scale, 0);//gravite
         vitesse = new Vector3(vitesse.x * 0.6f, vitesse.y, vitesse.z);
@@ -347,7 +364,6 @@ public class Personnage : Entity
     public void validerDeplacement()
     {
         position += deplacementCible+deplacementPlateforme;
-
     }
 
     public void collision(Plateform platef)
@@ -373,11 +389,9 @@ public class Personnage : Entity
                     if (position.y + marge < platef.position.y + platef.dimension.y && position.y + dimension.y - marge > platef.position.y)
                     {
                         vitesse = new Vector3(0, vitesse.y, vitesse.z);
-                        Debug.Log("DC:"+deplacementCible.x);
-                        if (!timerActive && deplacementCible.x>9.0f)
+                        if (!timerActive && timerAcceleration>0.3f)
                         {
                             //Choc
-                            Debug.Log("Choc");
                             facteurVitesse -= 10;
                             timerActive = true;
                             playHitWall();
