@@ -16,6 +16,8 @@ public class Plateform : Entity{
     private const float periodeX = 0.1f; // en sec
     private const float periodeY = 0.5f; // en sec
 
+    public Vector3 deplacement{get;private set;}
+
     public Plateform(Vector3 pos, Vector3 dim,Image im,Animation anim,bool isSchakyP = false) : base (pos, dim, new Vector3(), true, new Sprite(),im,anim)
     {
         isSchaky = isSchakyP;
@@ -29,6 +31,7 @@ public class Plateform : Entity{
             timer += dt;
             position = posInit + new Vector3(Mathf.Sin(timer / periodeX * Mathf.PI * 2f)*amplitudeX, Mathf.Sin(timer / periodeY * Mathf.PI * 2f+dephasage) * amplitudeY, 0);
             //w.getPlayer().position = new Vector3(w.getPlayer().vitesse.x,)
+            deplacement = new Vector3(Mathf.Sin(timer / periodeX * Mathf.PI * 2f)*amplitudeX,Mathf.Sin(timer / periodeY * Mathf.PI * 2f+dephasage) * amplitudeY,0);
         }
         base.update(dt, w);
 
