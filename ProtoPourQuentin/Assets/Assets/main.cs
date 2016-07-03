@@ -19,15 +19,16 @@ public class main : MonoBehaviour {
     public Image listePlateformes2;
     public Image listePlateformes3;
     public Image listePlateformesSchack;
+    public Image listePlateformesMvt;
     public Image groundI;
 
-
     
-
+    public Image iconeVirus;
+    public Image iconeVirusAn;
     PlateformeScript[] liste_plateformes;
     PlateformeScript[] liste_plateformes2;
     PlateformeScript[] liste_plateformes3;
-
+    PlateformeScript[] liste_plateformesMvt;
     PlateformeScript[] liste_plateformesShack;
 
     PlateformeScript[] ground;
@@ -98,6 +99,7 @@ public class main : MonoBehaviour {
         liste_plateformes2 = listePlateformes2.transform.GetComponentsInChildren<PlateformeScript>();
         liste_plateformes3 = listePlateformes3.transform.GetComponentsInChildren<PlateformeScript>();
         liste_plateformesShack = listePlateformesSchack.transform.GetComponentsInChildren<PlateformeScript>();
+        liste_plateformesMvt = listePlateformesMvt.transform.GetComponentsInChildren<PlateformeScript>();
         ground = groundI.transform.GetComponentsInChildren<PlateformeScript>();
 
 
@@ -109,7 +111,7 @@ public class main : MonoBehaviour {
             );
 
         virusOb = new Virus(new Vector3(virus.transform.position.x, virus.transform.position.y, 0), 
-            new Vector3(15*scale, 0*scale, 0), new Vector3(virus.rectTransform.rect.width, virus.rectTransform.rect.height, 0), 
+            new Vector3(13*scale, 0*scale, 0), new Vector3(virus.rectTransform.rect.width, virus.rectTransform.rect.height, 0), 
             Resources.Load<Sprite>("DSC02576"), virus, 0.8f, bille, AnimVirus,billeAnim, pickupSound);
     
         /*Image b = Instantiate(bille);
@@ -149,6 +151,14 @@ public class main : MonoBehaviour {
             liste_plateformesShack[i].plateform.anim = platAnimSch;
             liste_plateformesShack[i].plateform.isSchaky = true;
             ptemp.Add(liste_plateformesShack[i].plateform);
+        }
+        for (int i = 0; i < liste_plateformesMvt.Length; ++i)
+        {
+            liste_plateformesMvt[i].plateform.anim = platAnimSch;
+            liste_plateformesMvt[i].plateform.isSchaky = true;
+            //liste_plateformesMvt[i].plateform.amplitudeY = 100;
+            liste_plateformesMvt[i].plateform.periodeX = 3;
+            ptemp.Add(liste_plateformesMvt[i].plateform);
         }
 
         w = new World(joueur, ptemp, virusOb, billesLi, bille, billeParent);
@@ -193,6 +203,40 @@ public class main : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         float dt = Time.deltaTime;
+
+        iconeVirusAn.sprite = AnimVirus.image;
+
+        if (Mathf.Abs(w.getPlayer().position.x + 400 - w.virus.position.x) > Screen.width / 2f || Mathf.Abs(w.getPlayer().position.y  - w.virus.position.y) > Screen.height/2f )
+        {
+            iconeVirus.gameObject.SetActive(true);
+            float positonX;
+            float positonY;
+            Vector3 diffPos =- (w.getPlayer().position +new Vector3(400,0,0) - w.virus.position);
+          //  Debug.Log(diffPos);
+            if (diffPos.x < 0)
+            {
+                positonX = Mathf.Max(diffPos.x, -Screen.width / 3.4f);
+            }
+            else {
+                positonX = Mathf.Min(diffPos.x, Screen.width / 3.4f);
+            }
+
+            if (diffPos.y < 0)
+            {
+                positonY = Mathf.Max(diffPos.y, -Screen.height / 2.2f);
+            }
+            else
+            {
+                positonY = Mathf.Min(diffPos.y, Screen.height / 2.2f);
+            }
+
+            iconeVirus.rectTransform.position = new Vector3(positonX+ Screen.width/2f, positonY + Screen.height / 2f,0);
+
+        }
+        else {
+            iconeVirus.gameObject.SetActive(false);
+        }
+
         timerT.text = Mathf.Floor( w.timer) + " / " + w.maxTime;
         //mainScene.rectTransform.position = w.getPlayer().position;
 
@@ -247,7 +291,7 @@ public class main : MonoBehaviour {
 
             if (w.hasWin)
             {
-                //SceneManager.LoadScene("win");
+                SceneManager.LoadScene("win");
                 //youWinText.rectTransform.position = new Vector3(200, 200, 0);
             }
 

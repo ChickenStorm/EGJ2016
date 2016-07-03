@@ -199,7 +199,7 @@ public class Personnage : Entity
             timeFaste2 = 0;
             //im.r
         }
-        else if (Mathf.Abs(deplacementCible.x) > 5)
+        else if (Mathf.Abs(deplacementCible.x) > 15)
         {
 
             if (timeFaste1 < 0.5)
@@ -357,7 +357,7 @@ public class Personnage : Entity
 
                         if (!timerActive)
                         {
-                            facteurVitesse -= 3;
+                            facteurVitesse -= 10;
                             timerActive = true;
                             playHitWall();
                         }

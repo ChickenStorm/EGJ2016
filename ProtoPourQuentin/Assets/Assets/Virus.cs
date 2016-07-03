@@ -15,8 +15,8 @@ public class Virus : Entity
     private Vector3 intialPos;
     private AudioSource pickUpAudio;
 
-    private const float maxDistStop = 2500;
-    private const float distRepriseForward = 1500;
+    private const float maxDistStop = 1500;
+    private const float distRepriseForward = 1000;
     private bool isWaiting = false;
 
     public void setToInitialPosWithOfSet(int death,Personnage p) {
@@ -81,9 +81,9 @@ public class Virus : Entity
 
         // TODO mettre les dims 
 
-        if (Mathf.Abs(w.getPlayer().position.x - this.position.x) < base.dimension.x + w.getPlayer().dimension.x && Mathf.Abs(w.getPlayer().position.y - this.position.y) < base.dimension.y + w.getPlayer().dimension.y) {
+        if (Mathf.Abs(w.getPlayer().position.x - this.position.x) < (base.dimension.x + w.getPlayer().dimension.x)/2f && Mathf.Abs(w.getPlayer().position.y - this.position.y) < (base.dimension.y + w.getPlayer().dimension.y)/2f) {
             w.hasWin = true;
-            Debug.Log("win");
+            //Sce
         }
         
     }
