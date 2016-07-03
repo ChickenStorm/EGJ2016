@@ -8,7 +8,12 @@ public class Personnage : Entity
     public bool toucheEnfoncerA { get; set; }
     public bool toucheEnfoncerSpace { get; set; }
     public float facteurVitesse { get; set; }
-    public boo toucheEnfoncerR { get; set; }
+    public bool toucheEnfoncerR { get; set; }
+
+    private float timerResp =0;
+    private float MaxtimerResp = 3;
+
+    private bool hasRespawn = false;
 
     private AudioSource jumpSound;
     private AudioSource fallUnderMapSound;
@@ -77,7 +82,7 @@ public class Personnage : Entity
     }*/
 
     private void respawn(World w) {
-        position = respawnPos+new Vector3(0,1000,0);
+        position = respawnPos+new Vector3(0,100,0);
         ++numberOfDeath;
         w.virus.setToInitialPosWithOfSet(numberOfDeath, this);
         facteurVitesse = vitesseMin;
@@ -95,6 +100,15 @@ public class Personnage : Entity
             if (timerFastSound >= MaxtimerFastSound) {
                 hasPlayAccelerationSound = false;
                 timerFastSound = 0;
+            }
+        }
+        if (hasRespawn)
+        {
+            timerResp += dt;
+            if (timerResp >= MaxtimerResp)
+            {
+                hasRespawn = false;
+                timerResp = 0;
             }
         }
         //base.update(dt,w);
@@ -119,20 +133,29 @@ public class Personnage : Entity
 
         if (Input.GetKeyDown(KeyCode.D))
             toucheEnfoncerD = true;
-        if (Input.GetKeyDown(KeyCode.R))
-            toucheEnfoncerR = true;
+        /*if (Input.GetKeyDown(KeyCode.R))
+            toucheEnfoncerR = true;*/
         if (Input.GetKeyUp(KeyCode.D))
             toucheEnfoncerD = false;
         if (Input.GetKeyDown(KeyCode.A))
             toucheEnfoncerA = true;
         if (Input.GetKeyUp(KeyCode.A))
             toucheEnfoncerA = false;
-        if (Input.GetKeyUp(KeyCode.R))
-            toucheEnfoncerR = false;
+        /*if (Input.GetKeyUp(KeyCode.R))
+            toucheEnfoncerR = false;*/
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
         {
             foreach (Plateform p in w.platforms)
                 saut(p);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && ! hasRespawn) {
+            hasRespawn = true;
+            respawn(w);
+        }
+        if (Input.GetKeyDown(KeyCode.Q) )
+        {
+            facteurVitesse += 2;
         }
 
         deplacer(dt);
