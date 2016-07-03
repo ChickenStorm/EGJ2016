@@ -63,19 +63,24 @@ public class Personnage : Entity
         hitWallSound = hitWallSoundP;
         boostSound = boostSoundP;
         voidAnim.update(1);
+
         toucheEnfoncerD = false;
         toucheEnfoncerA = false;
         toucheEnfoncerSpace = false;
         vitesseMin = 24;
+
         dimensionInitiale = dim * scale;
         facteurVitesse = vitesseMin;
+
         timerCollision = 0;
         timerActive = false;
+
         aDejaSaute = false;
         enSaut = false;
         playerFast = playerFastP;
         playerTr = playerTrP;
         respawnPos = respawnPosP;
+        deplacementPlateforme = new Vector3();
     }
 
     /*public Personnage(Image im) : this(new Vector3(), new Vector3(), new Vector3(), new Sprite(),im)
@@ -137,19 +142,19 @@ public class Personnage : Entity
 
 
 
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.C))
             toucheEnfoncerD = true;
         /*if (Input.GetKeyDown(KeyCode.R))
             toucheEnfoncerR = true;*/
-        if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.C))
             toucheEnfoncerD = false;
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.Y))
             toucheEnfoncerA = true;
-        if (Input.GetKeyUp(KeyCode.A))
+        if (Input.GetKeyUp(KeyCode.Y))
             toucheEnfoncerA = false;
         /*if (Input.GetKeyUp(KeyCode.R))
             toucheEnfoncerR = false;*/
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             foreach (Plateform p in w.platforms)
                 saut(p);
@@ -157,7 +162,7 @@ public class Personnage : Entity
 
         if(vitesse.y > 0)
         {
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.X))
             {
             vitesse = new Vector3(vitesse.x, 0, vitesse.z);
         }
@@ -174,6 +179,7 @@ public class Personnage : Entity
         }
 
         deplacer(dt);
+        deplacementPlateforme = new Vector3();
         foreach (Plateform p in w.platforms)
             deplacementShaky(p);
         foreach (Plateform p in w.platforms)
@@ -331,7 +337,7 @@ public class Personnage : Entity
         if (!enSaut)
         {
             jumpSound.PlayOneShot(jumpSound.clip, 0.8f);
-            vitesse = new Vector3(vitesse.x, vitesse.y + 40 * scale, vitesse.z);
+            vitesse = new Vector3(vitesse.x, vitesse.y + 30 * scale, vitesse.z);
             aDejaSaute = true;
             enSaut = true;
         }
@@ -341,7 +347,7 @@ public class Personnage : Entity
     public void validerDeplacement()
     {
         position += deplacementCible+deplacementPlateforme;
-        Debug.Log("Perso3 : " + (deplacementCible));
+
     }
 
     public void collision(Plateform platef)
@@ -366,15 +372,17 @@ public class Personnage : Entity
                     //Debug.Log(nPosition);
                     if (position.y + marge < platef.position.y + platef.dimension.y && position.y + dimension.y - marge > platef.position.y)
                     {
-                        deplacementCible.x = 0;
                         vitesse = new Vector3(0, vitesse.y, vitesse.z);
-
-                        if (!timerActive)
+                        Debug.Log("DC:"+deplacementCible.x);
+                        if (!timerActive && deplacementCible.x>9.0f)
                         {
+                            //Choc
+                            Debug.Log("Choc");
                             facteurVitesse -= 10;
                             timerActive = true;
                             playHitWall();
                         }
+                        deplacementCible.x = 0;
                         if (facteurVitesse <= vitesseMin)
                         {
                             facteurVitesse = vitesseMin;
@@ -397,7 +405,6 @@ public class Personnage : Entity
 
     public void deplacementShaky(Plateform platef)
     {
-        deplacementPlateforme = new Vector3();
         if (!(position.x + dimension.x < platef.position.x - 30 || position.x > platef.position.x + platef.dimension.x + 30))
         {
             if (platef != null)
@@ -418,11 +425,7 @@ public class Personnage : Entity
                 {
                     if (position.x + marge < platef.position.x + platef.dimension.x && position.x + dimension.x - marge > platef.position.x)
                     {
-                        //if (platef.isSchaky)
-                        {
-                            Vector3 ancienDeplacement = deplacementCible;
-                            deplacementPlateforme = platef.deplacement;
-                        }
+                        deplacementPlateforme = platef.deplacement;
                     }
                 }
                 //return false;
