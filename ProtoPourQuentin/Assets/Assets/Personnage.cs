@@ -175,7 +175,7 @@ public class Personnage : Entity
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            facteurVitesse += 2;
+            //facteurVitesse += 2;
         }
 
         deplacer(dt);
@@ -337,7 +337,7 @@ public class Personnage : Entity
         if (!enSaut)
         {
             jumpSound.PlayOneShot(jumpSound.clip, 0.8f);
-            vitesse = new Vector3(vitesse.x, vitesse.y + 30 * scale, vitesse.z);
+            vitesse = new Vector3(vitesse.x, vitesse.y + 32 * scale, vitesse.z);
             aDejaSaute = true;
             enSaut = true;
         }
