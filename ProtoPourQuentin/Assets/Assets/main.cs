@@ -126,14 +126,14 @@ public class main : MonoBehaviour {
 
         for (int i = 0; i < liste_plateformes2.Length; ++i)
         {
-            liste_plateformes[i].plateform.anim = platAnim2;
+            liste_plateformes2[i].plateform.anim = platAnim2;
             ptemp.Add(liste_plateformes2[i].plateform);
         }
 
 
         for (int i = 0; i < liste_plateformes3.Length; ++i)
         {
-            liste_plateformes[i].plateform.anim = platAnim3;
+            liste_plateformes3[i].plateform.anim = platAnim3;
             ptemp.Add(liste_plateformes3[i].plateform);
         }
 
@@ -217,7 +217,7 @@ public class main : MonoBehaviour {
         //c1.transform.position = new Vector3(w.getPlayer().position.x, w.getPlayer().position.y, 0) + new Vector3(400, 0, 0) * scale;
 
         //c1.transform.position = lastPosCam;
-        BG.rectTransform.position = new Vector3(c1.transform.position.x, c1.transform.position.y / 3.0f, 0) / 5;
+        BG.rectTransform.position = new Vector3(c1.transform.position.x, c1.transform.position.y , 0) / 5;
 
         lastDepCam = diffPosCamPlayer;
 

@@ -8,7 +8,7 @@ public class Personnage : Entity
     public bool toucheEnfoncerA { get; set; }
     public bool toucheEnfoncerSpace { get; set; }
     public float facteurVitesse { get; set; }
-
+    public boo toucheEnfoncerR { get; set; }
 
     private AudioSource jumpSound;
     private AudioSource fallUnderMapSound;
@@ -115,14 +115,20 @@ public class Personnage : Entity
             
         im.rectTransform.position = position+ (new Vector3(dimension.x*im.rectTransform.pivot.x, dimension.y* im.rectTransform.pivot.y,0));
 
+        
+
         if (Input.GetKeyDown(KeyCode.D))
             toucheEnfoncerD = true;
+        if (Input.GetKeyDown(KeyCode.R))
+            toucheEnfoncerR = true;
         if (Input.GetKeyUp(KeyCode.D))
             toucheEnfoncerD = false;
         if (Input.GetKeyDown(KeyCode.A))
             toucheEnfoncerA = true;
         if (Input.GetKeyUp(KeyCode.A))
             toucheEnfoncerA = false;
+        if (Input.GetKeyUp(KeyCode.R))
+            toucheEnfoncerR = false;
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
         {
             foreach (Plateform p in w.platforms)
@@ -227,13 +233,17 @@ public class Personnage : Entity
             timeFaste1 = 0;
             timeFaste2 = 0;
         }
-        /*if (deplacementCible.x < 0) {
+        if (deplacementCible.x < 0) {
             im.transform.localScale = new Vector3 (-1,1,1);
+            playerFast.transform.localScale = new Vector3(-1, 1, 1);
+            playerTr.transform.localScale = new Vector3(-1, 1, 1);
         }
         if (deplacementCible.x > 0)
         {
+            playerFast.transform.localScale = new Vector3(1, 1, 1);
+            playerTr.transform.localScale = new Vector3(1, 1, 1);
             im.transform.localScale = new Vector3(1, 1, 1);
-        }*/
+        }
     }
 
 

@@ -15,6 +15,10 @@ public class Virus : Entity
     private Vector3 intialPos;
     private AudioSource pickUpAudio;
 
+    private const float maxDistStop = 2500;
+    private const float distRepriseForward = 1500;
+    private bool isWaiting = false;
+
     public void setToInitialPosWithOfSet(int death,Personnage p) {
         position = new Vector3(p.position.x + +death * 300 + 200, intialPos.y , 0 );
     }
@@ -41,18 +45,35 @@ public class Virus : Entity
 
 
     public override void update(float dt, World w) {
-        anim.update(dt);
-        im.sprite = anim.image;
+        //anim.update(dt);
+        //im.sprite = anim.image;
+
+        if (w.virus.position.x - w.getPlayer().position.x > maxDistStop) {
+            isWaiting = true;
+        }
+        if (isWaiting && w.virus.position.x - w.getPlayer().position.x < distRepriseForward) {
+            isWaiting = false;
+        }
 
         internalTime += dt;
         //Debug.Log(internalTime);
         if (internalTime > dropTime) {
-            
-            dropBille(w);
+            if (!isWaiting)
+            {
+                dropBille(w);
+            }
             internalTime -= dropTime;
         }
 
-        base.update(dt,w);
+        anim.update(dt);
+        im.sprite = anim.image;
+        im.rectTransform.position = position; //- new Vector3(+40,-40,0) ;
+        if (!isStatique && ! isWaiting)
+        {
+            position += vitesse;
+        }
+
+        //base.update(dt,w);
         //position += vitesse * dt;
 
         //base.im.rectTransform.position = position;
