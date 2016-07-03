@@ -48,7 +48,7 @@ public class Personnage : Entity
 
     private Animation AnimationStill = new Animation("joueurStill", 0.05f, 1);
     private Animation AnimationFast = new Animation("joueurFast", 0.05f, 5);
-    private Animation AnimationTransit = new Animation("joueurTransit", 0.05f, 11);
+    private Animation AnimationTransit = new Animation("joueurTransit", 0.15f, 11);
 
 
     Vector3 deplacementCible;
