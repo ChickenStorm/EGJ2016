@@ -13,7 +13,9 @@ public class Personnage : Entity
     bool aDejaSaute;
     bool timerActive;
     bool enSaut;
-
+    public Image playerFast;
+    public Image playerTr;
+    public Animation voidAnim = new Animation("void", 0.05f, 1);
     int numberOfDeath = 0;
     Vector3 dimensionInitiale;
 
@@ -30,8 +32,9 @@ public class Personnage : Entity
 
     Vector3 deplacementCible;
 
-    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri, Image im, Animation anim) : base(pos, dim, vit, false, spri, im, anim)
+    public Personnage(Vector3 pos, Vector3 dim, Vector3 vit, Sprite spri, Image im, Animation anim,Image playerFastP, Image playerTrP) : base(pos, dim, vit, false, spri, im, anim)
     {
+        voidAnim.update(1);
         toucheEnfoncerD = false;
         toucheEnfoncerA = false;
         toucheEnfoncerSpace = false;
@@ -42,6 +45,8 @@ public class Personnage : Entity
         timerActive = false;
         aDejaSaute = false;
         enSaut = false;
+        playerFast = playerFastP;
+        playerTr = playerTrP;
     }
 
     /*public Personnage(Image im) : this(new Vector3(), new Vector3(), new Vector3(), new Sprite(),im)
@@ -56,7 +61,7 @@ public class Personnage : Entity
         //base.update(dt,w);
         if (position.y < -1000)
         {
-            position = new Vector3(0, 500, 0);
+            position = new Vector3(0, 1300, 0);
             ++numberOfDeath;
 
             w.virus.position = new Vector3(200+300* numberOfDeath, 1000, 0);
@@ -64,6 +69,9 @@ public class Personnage : Entity
         }
 
         //deplacer joueur
+        playerFast.rectTransform.position = position + (new Vector3(dimension.x * im.rectTransform.pivot.x, dimension.y * im.rectTransform.pivot.y, 0));
+        playerTr.rectTransform.position = position + (new Vector3(dimension.x * im.rectTransform.pivot.x, dimension.y * im.rectTransform.pivot.y, 0));
+            
         im.rectTransform.position = position+ (new Vector3(dimension.x*im.rectTransform.pivot.x, dimension.y* im.rectTransform.pivot.y,0));
 
         if (Input.GetKeyDown(KeyCode.D))
@@ -103,20 +111,29 @@ public class Personnage : Entity
 
         if (Mathf.Abs(deplacementCible.x) < 0.5f)
         {
-            im.transform.localScale = new Vector3(1, 1, 1);
+            im.gameObject.SetActive(true);
+            playerFast.gameObject.SetActive(false);
+            playerTr.gameObject.SetActive(false);
+            //im.transform.Translate(new Vector3(0, 0, 0));
+            //im.transform.localScale = new Vector3(1, 1, 1);
             dimension = dimensionInitiale;
             //im.rectTransform.rect.Set(0100, 100, 2000, 100);
+            //playerFast.sprite = voidAnim.image;
+            //playerTr.sprite = voidAnim.image;
             AnimationStill.update(dt);
             im.sprite = AnimationStill.image;
             timeFaste1 = 0;
             timeFaste2 = 0;
             //im.r
         }
-        else if (Mathf.Abs(deplacementCible.x) > 11)
+        else if (Mathf.Abs(deplacementCible.x) > 5)
         {
 
-            if (timeFaste1 < 1)
+            if (timeFaste1 < 0.5)
             {
+                im.gameObject.SetActive(true);
+                playerFast.gameObject.SetActive(false);
+                playerTr.gameObject.SetActive(false);
                 timeFaste1 += dt;
                 anim.update(dt * facteurVitesse / 100);
                 im.sprite = anim.image;
@@ -124,29 +141,39 @@ public class Personnage : Entity
             }
             else if (timeFaste2 < 0.1)
             {
+
+                im.gameObject.SetActive(false);
+                playerFast.gameObject.SetActive(false);
+                playerTr.gameObject.SetActive(true);
                 timeFaste2 += dt;
                 AnimationTransit.update(dt);
 
-                im.sprite = AnimationTransit.image;
+                playerTr.sprite = AnimationTransit.image;
             }
             else
             {
                 //AnimationTransit.timer = 0;
                 //im.rectTransform.anchoredPosition = new Vector2(0.01f, 0);
-                //im.transform.Translate(new Vector3(-100,0,0));
-                im.transform.localScale = new Vector3(2.7972027972027972027972027972028f, 1, 1);
-                dimension = new Vector3(200, 100, 0);
+                //im.transform.Translate(new Vector3(-150, 0, 0));
+                //im.transform.localScale = new Vector3(2.7972027972027972027972027972028f, 1, 1);
+                im.gameObject.SetActive(false);
+                playerFast.gameObject.SetActive(true);
+                playerTr.gameObject.SetActive(false);
+                //dimension = new Vector3(200, 100, 0);
                 //im.rectTransform.anchoredPosition = new Vector2(0, 0);
                 AnimationFast.update(dt);
-                im.sprite = AnimationFast.image;
+                playerFast.sprite = AnimationFast.image;
             }
         }   
         else
         {
             //AnimationStill.hasUpdate = false;
             //im.rectTransform.rect.width = 71.5f;
+            im.gameObject.SetActive(true);
+            playerFast.gameObject.SetActive(false);
+            playerTr.gameObject.SetActive(false);
 
-            im.transform.localScale = new Vector3(1, 1, 1);
+            //im.transform.localScale = new Vector3(1, 1, 1);
             dimension = dimensionInitiale;
             anim.update(dt * facteurVitesse / 15);
             im.sprite = anim.image;

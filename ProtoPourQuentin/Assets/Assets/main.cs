@@ -9,6 +9,10 @@ public class main : MonoBehaviour {
 
     Personnage joueur;
     public Image imageJoueur;
+    public Image imageJoueurF;
+    public Image imageJoueurTr;
+
+
     public Image listePlateformes;
     public Image virus;
 
@@ -75,7 +79,7 @@ public class main : MonoBehaviour {
         ground = groundI.transform.GetComponentsInChildren<PlateformeScript>();
 
 
-        joueur = new Personnage(new Vector3(imageJoueur.transform.position.x, imageJoueur.transform.position.y, 0), new Vector3(imageJoueur.rectTransform.rect.width, imageJoueur.rectTransform.rect.height, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur, joueurAnim);
+        joueur = new Personnage(new Vector3(imageJoueur.transform.position.x, imageJoueur.transform.position.y, 0), new Vector3(imageJoueur.rectTransform.rect.width, imageJoueur.rectTransform.rect.height, 0), new Vector3(0, 0, 0), Resources.Load<Sprite>("DSC02576"), imageJoueur, joueurAnim, imageJoueurF, imageJoueurTr);
         virusOb = new Virus(new Vector3(virus.transform.position.x, virus.transform.position.y, 0), new Vector3(15*scale, 0*scale, 0), new Vector3(virus.rectTransform.rect.width, virus.rectTransform.rect.height, 0), Resources.Load<Sprite>("DSC02576"), virus, 0.8f, bille, AnimVirus,billeAnim);
     
         Image b = Instantiate(bille);
